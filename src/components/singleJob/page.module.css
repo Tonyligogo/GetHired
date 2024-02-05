@@ -1,0 +1,20 @@
+.jobTitle{
+    margin: 0;
+}
+.wrapper > *{
+    display: block;
+}
+.container{
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    padding: 4px;
+    display: flex;
+    gap: 12px;
+}
+.wrapper{
+    flex-grow: 1;
+}
+.wrapper > div{
+    margin-bottom: 8px;
+}

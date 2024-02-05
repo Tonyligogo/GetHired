@@ -1,0 +1,38 @@
+.sidebar{
+    min-width: 260px;
+    position: sticky;
+    top: 10px;
+    height: fit-content;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    padding: 4px;
+}
+.form > div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+.checkbox{
+    flex-direction: row !important;
+} 
+.filterBtn{
+    width: 100%;
+    border: none;
+    background-color: rgb(1, 1, 29);
+    color: white;
+    border-radius: 4px;
+    padding-block: 3px;
+}
+.searchInput{
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.select{
+    background: none;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 300;
+    padding-block: 3px;
+}

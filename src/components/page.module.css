@@ -1,0 +1,9 @@
+.locationBtn{
+    background: none;
+    display: block;
+    width: 100%;
+    text-align: start;
+    border: 1px solid lightgrey;
+    margin-top: 4px;
+    border-radius: 4px;
+}

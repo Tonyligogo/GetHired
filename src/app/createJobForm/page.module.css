@@ -1,0 +1,50 @@
+.container{
+    min-width: 700px;
+    margin: 0 auto;
+}
+.heading{
+    text-align: center;
+}
+.subheading{
+    color: grey;
+}
+.formWrapper{
+    border: 1px solid lightgrey;
+    border-bottom: transparent;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 10px 20px;
+}
+.formWrapper > *{
+    margin-bottom: 10px;
+}
+.select{
+    background: none;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 300;
+    padding-block: 3px;
+}
+.form > div{
+   margin-bottom: 10px;
+}
+.form > div label{
+    display: block;
+}
+.form > div input,
+.form > div select
+{
+    width: 100%;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+}
+.emailandUrlWrapper{
+    display: flex;
+    gap: 3px;
+}
+
+/* editor css */
+.editorClassName{
+    border: 1px solid lightblue;
+}
