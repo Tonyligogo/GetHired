@@ -1,7 +1,7 @@
 .HomeContainer{
     display: flex;
     gap: 20px;
-    padding-block: 40px;
+    padding-block: 30px;
     margin-inline: 80px;
     align-items: center;
   }
@@ -46,7 +46,10 @@
 .fiverrBsContainer{
     display: flex;
     align-items: center;
-    padding: 60px 2rem;
+    padding: 60px 4rem;
+}
+.fiverrBsWrapper{
+    padding: 0px 4rem;
 }
 .fiverrBsContainer .leftSide{
     flex: 2;

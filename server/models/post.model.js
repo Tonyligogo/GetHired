@@ -41,6 +41,10 @@ const postSchema = new Schema({
     companyLogo:{
         type: String,
         required: false,
+    },
+    approved: {
+        type: Boolean,
+        default: false,
     }
 },{timestamps: true});
 

@@ -7,7 +7,10 @@ function Footer() {
     <footer className={styles.footer}>
         {/* <div className={styles.line}></div> */}
         <div className={styles.tabs}>
-            <p>GetHired</p>
+        <div className={styles.blogy}>
+                <p>GetHired</p>
+                <p className={styles.text}>Connecting talents with opportunities</p>
+            </div>
             <div className={styles.right}>
                 <div className={styles.social}>
                     <ul className={styles.list}>

@@ -12,19 +12,24 @@ const fetchJobs = async ()=>{
 }
 export default async function JobResults({filterValues:{q, type, location, remote}}) {
 
-  // const jobs = await fetch('https://jsonplaceholder.typicode.com/users')
-  // .then(response => response.json())
   const jobs = await fetchJobs()
 
-  const queryString = q?.split(" ").filter(word => word.length > 0);
-  const typeString = type?.split(" ").filter(word => word.length > 0);
-  const locationString = location?.split(" ").filter(word => word.length > 0);
+  const queryString = q?.toLowerCase().split(" ").filter(word => word.length > 0);
+  const typeString = type?.toLowerCase().split(" ").filter(word => word.length > 0);
+  const locationString = location?.toLowerCase().split(" ").filter(word => word.length > 0);
   const remoteJobs = remote ? 'Remote' : 'On-site Hybrid';
+
   
   const searchString = queryString || typeString || locationString || remoteJobs
+  const searchQuery = q?.toLowerCase().toString() || type?.toLowerCase().toString() || location?.toLowerCase().toString() || remoteJobs?.toLowerCase().toString();
+  console.log(searchString)
+  // console.log(searchQuery.includes('trial'))
+
   // data.data.employees.length ? data.data.employees.filter((name)=>{
   //   return query === '' ? name : name.first_name.toLowerCase().includes(query) || name.last_name.toLowerCase().includes(query);
   // })
+
+  const keys = ["title", "type", "location", ]
 
   return (
     <div>
@@ -32,7 +37,11 @@ export default async function JobResults({filterValues:{q, type, location, remot
             <Link  key={job._id} href={`/jobs/${job._id}`}> <SingleJob job={job}/> </Link>
           ))}
           {searchString && jobs?.filter((job)=>{
-            return searchString === "" ? job : job?.title?.toLowerCase().includes(searchString)
+            return searchString === "" ? job : 
+            job?.title?.toLowerCase().includes(searchString) || 
+            job?.type?.toLowerCase().includes(searchString) ||  
+            job?.location?.toLowerCase().includes(searchString) || 
+            job?.locationType?.toLowerCase().includes(searchString)
           }).map(job => (
             <Link key={job._id} href={`/jobs/${job._id}`}> <SingleJob job={job} /> </Link>
           ))}

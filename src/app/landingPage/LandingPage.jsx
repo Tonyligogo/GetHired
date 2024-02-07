@@ -1,25 +1,11 @@
 'use client'
 import styles from './page.module.css'
-import { useEffect, useRef } from 'react'
-import Lottie from 'lottie-web'
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import frontImage from "../../../public/jobSearchAnim2.png"
 import Link from 'next/link';
 
-export default function page() {
-
-  const animationContainer = useRef(null)
-  useEffect(()=>{
-    const instance=Lottie.loadAnimation({
-      container: animationContainer.current,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: require('../../../public/animation.json')
-    })
-    return ()=> instance.destroy()
-  },[])
+export default function LandingPage() {
 
   return (
     <div>
@@ -41,28 +27,28 @@ export default function page() {
       <div className={styles.fiverrBusiness}>
         <div className={styles.fiverrBsContainer}>
           <div className={styles.leftSide}>
-            <h1>Up your work game, it&apos;s easy</h1>
+            <h1>Find talent your way</h1>
             <div className={styles.leftSideBody}>
               <ul>
                 <li>
                     <Icon icon="jam:write" width="30"/>  
                     <p>
                         <span>No cost to join</span> 
-                        <small>Register and browse professionals, explore projects, or even book a consultation.</small>
+                        <small>Register and browse professionals, explore projects, for FREE!</small>
                     </p>
                 </li>
                 <li>
                 <Icon icon="cil:pin" width="30"/> 
                     <p>
                         <span>Post a job and hire talent</span> 
-                        <small>Finding talent doesn&apos;t have to be a chore. Post a job or we can search for you!</small>
+                        <small>Finding talent doesn&apos;t have to be a chore. Post a job and wait for talent to find you</small>
                     </p>
                 </li>
                 <li>
                 <Icon icon="mdi:badge-outline" width="30"/>  
                     <p>
                         <span>Work with the best—without breaking the bank</span> 
-                        <small>Upwork makes it affordable to up your work and take advantage of low transaction rates.</small>
+                        <small>GetHired makes it affordable to find professionals and get things done</small>
                     </p>
                 </li>
                 
@@ -72,6 +58,47 @@ export default function page() {
           </div>
           <div className={styles.rightSide}>
             <img src="https://fiverr-res.cloudinary.com/q_auto,f_auto,w_870,dpr_1.0/v1/attachments/generic_asset/asset/d9c17ceebda44764b591a8074a898e63-1599597624757/business-desktop-870-x1.png" alt="imagePlaceholder" />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className={`${styles.fiverrBsContainer} ${styles.fiverrBsWrapper}`}>
+          <div className={styles.leftSide}>
+            <h1>Find great work</h1>
+            <div className={styles.leftSideBody}>
+              <ul>
+                <li>
+                    <Icon icon="jam:write" width="30"/>  
+                    <p>
+                        Meet clients you’re excited to work with and take
+your career or business to new heights
+                    </p>
+                </li>
+                <li>
+                <Icon icon="cil:pin" width="30"/> 
+                    <p>
+                        Find opportunities for every stage of your freelance career
+                    </p>
+                </li>
+                <li>
+                <Icon icon="mdi:badge-outline" width="30"/>  
+                    <p>
+                        Control when, where, and how you work
+                    </p>
+                </li>
+                <li>
+                <Icon icon="mdi:badge-outline" width="30"/>  
+                    <p>
+                        Explore different ways to earn
+                    </p>
+                </li>
+                
+              </ul>
+            </div>
+            <button className={styles.exploreBs}>Find opportunities</button>
+          </div>
+          <div className={styles.rightSide}>
+            <img className={styles.jobseekerImage} src="https://assets.materialup.com/uploads/5f0afa2b-cb25-467f-89ab-71b9303f3563/preview.jpg" alt="imagePlaceholder" />
           </div>
         </div>
       </div>

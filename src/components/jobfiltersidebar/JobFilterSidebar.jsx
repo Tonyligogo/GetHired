@@ -18,7 +18,7 @@ async function filterJobs(formData){
     ...(remote && { remote: "true" }),
   })
 
-  redirect(`/?${searchParams.toString()}`)
+  redirect(`/jobs/allJobs?${searchParams.toString()}`)
 
 }
 
