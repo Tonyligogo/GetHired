@@ -25,9 +25,6 @@
     justify-content: space-between;
     height: 180px;
 }
-.right > *{
-    /* flex-grow: 1; */
-}
 .type{
     text-align: center;
     background-color: rgb(236, 236, 236);
@@ -36,7 +33,7 @@
 }
 .date{
     display: flex;
-    align-items: end;
+    align-items: flex-end;
 }
 .wrapper{
     flex-grow: 1;

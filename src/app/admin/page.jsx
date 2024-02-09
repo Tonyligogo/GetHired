@@ -17,10 +17,10 @@ export default async function page() {
 
   return (
     <main className={styles.container}>
-        <h1>Admin Dashboard</h1>
-        <section>
-            <h2>Unapproved jobs</h2>
-            <div>
+        <h1 className={styles.title}>Admin Dashboard</h1>
+        <section className={styles.unapprovedJobsContainer}>
+            <h2>Unapproved jobs :</h2>
+            <div className={styles.jobsWrapper}>
                 {jobs?.jobs?.map(job => (
                     <Link  key={job._id} href={`/admin/jobs/${job._id}`}> <SingleJob job={job}/> </Link>
                 ))}

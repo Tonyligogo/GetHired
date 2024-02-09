@@ -22,8 +22,6 @@ export default async function JobResults({filterValues:{q, type, location, remot
   
   const searchString = queryString || typeString || locationString || remoteJobs
   const searchQuery = q?.toLowerCase().toString() || type?.toLowerCase().toString() || location?.toLowerCase().toString() || remoteJobs?.toLowerCase().toString();
-  console.log(searchString)
-  // console.log(searchQuery.includes('trial'))
 
   // data.data.employees.length ? data.data.employees.filter((name)=>{
   //   return query === '' ? name : name.first_name.toLowerCase().includes(query) || name.last_name.toLowerCase().includes(query);

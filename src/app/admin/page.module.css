@@ -1,3 +1,10 @@
-.container{
-    border: 1px solid red;
+.title{
+    text-align: center;
+}
+.unapprovedJobsContainer{
+    max-width: 600px;
+    margin: 20px auto;
+}
+.jobsWrapper{
+    margin-top: 20px;
 }

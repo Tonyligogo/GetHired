@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import axios from 'axios'
 import {User} from "@clerk/nextjs/server"
+import { auth } from "@clerk/nextjs";
 
 
 export async function approveSubmission(prevState, formData) {
@@ -14,6 +15,12 @@ export async function approveSubmission(prevState, formData) {
         const jobId = formData.get("jobId")
 
         const user = await currentUser();
+        const { sessionClaims } = auth();
+ 
+        // If the user does not have the admin role, redirect them to the home page
+        if (sessionClaims?.metadata.role !== "admin") {
+            throw new Error("You are not authorised to access this page")
+        }
 
         if(!user || !isAdmin(user)){
             throw new Error("Not authorised to access this page")

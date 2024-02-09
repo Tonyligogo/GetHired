@@ -1,0 +1,59 @@
+.container{
+    max-width: 340px;
+    position: sticky;
+    top: 10px;
+    height: fit-content;
+}
+.profilePic{
+    border-radius: 50%;
+    border: 2px solid #432cd6;
+}
+.user{
+    width: 300px;
+    text-align: center;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+.user>:first-child{
+    display: grid;
+    place-items: center;
+    margin-bottom: 10px;
+}
+.btn{
+    border: none;
+    background-color: #432cd6;
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.btn:hover{
+    background-color: transparent;
+    outline: 1px solid #432cd6;
+    color: black;
+}
+.text{
+    color: gray;
+}
+.skillsWrapper{
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
+}
+.skillsContainer{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.skillsContainer > *{
+    background-color: #f3f3f3;
+    border-radius: 4px;
+    padding: 2px 8px;
+    text-align: center;
+}
