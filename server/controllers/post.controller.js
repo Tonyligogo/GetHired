@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken";
 import Post from "../models/post.model.js";
+import { connect } from "../index.js";
 
 export const createPost = async (req, res)=>{
     try{
+      await connect();
         // const token = req.cookies.accessToken;
         // if(!token) return res.status(401).send('Not logged in');
         // jwt.verify(token, process.env.JWT_KEY, async (err, info)=>{
@@ -39,6 +41,7 @@ export const createPost = async (req, res)=>{
 }
 
 export const deletePost = async (req, res)=>{
+  await connect();
     const token = req.cookies.accessToken;
     if(!token) return res.status(401).send('Not logged in');
     await Post.findByIdAndDelete(req.params.id)
@@ -46,6 +49,7 @@ export const deletePost = async (req, res)=>{
 }
 
 export const getPosts = async (req, res)=>{
+  await connect()
     // const token = req.cookies.accessToken;
     // if(!token) return res.status(401).send('Not logged in');
     res.json(
@@ -57,6 +61,7 @@ export const getPosts = async (req, res)=>{
 }
 export const getSinglePost = async (req, res)=>{
   try {
+    await connect();
     await Post.findById(req.params.id).then((result) => {
           if (result) {
             res.status(201).json({
@@ -82,6 +87,7 @@ export const getSinglePost = async (req, res)=>{
 }
 export const getUnapprovedJobs = async (req, res)=>{
   try {
+    await  connect();
     await Post.find({approved : false}).then((result) =>{
           if (result) {
             res.status(201).json({
@@ -105,9 +111,8 @@ export const getUnapprovedJobs = async (req, res)=>{
       }
 }
 export const approveJobUpdate = async (req, res) => {
-  await Post.findByIdAndUpdate(req.params.id, {approved: true}, {
-    new: true,
-  })
+  await  connect();
+  await Post.findByIdAndUpdate(req.params.id, {approved: true})
     .then((result) => {
       if (!result) {
         res.status(404).json({
@@ -130,6 +135,7 @@ export const approveJobUpdate = async (req, res) => {
     });
 };
 export const deleteApprovalJob = async (req, res)=>{
+  await connect();
   //This deletes the jobs that are available for approval 
 
   // const token = req.cookies.accessToken;
