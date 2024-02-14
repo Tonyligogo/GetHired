@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import userRoute from './routes/user.route.js';
 import postRoute from './routes/post.route.js';
-import commentRoute from './routes/comment.route.js';
+import jobSeekerRoute from './routes/jobSeeker.route.js';
+import jobSeekerCVRoute from './routes/jobSeekerCV.route.js';
 import authRoute from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
@@ -34,9 +35,10 @@ app.use("/uploads", express.static("uploads"));
 app.use('/auth', authRoute)
 app.use('/user', userRoute)
 app.use('/post', postRoute)
-app.use('/comment', commentRoute)
+app.use('/jobSeeker', jobSeekerRoute)
+app.use('/jobSeekerCV', jobSeekerCVRoute)
 
-app.listen(8000, ()=>{
+app.listen(8008, ()=>{
     connect()
     console.log('backend running');
 })

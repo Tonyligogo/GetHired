@@ -7,6 +7,17 @@ const nextConfig = {
             hostname: 'img.clerk.com',
             pathname: '**',
           },
+          {
+            protocol: 'https',
+            hostname: 'freelogopng.com',
+            pathname: '**',
+          },
+          {
+            protocol: 'https',
+            hostname: 'lh3.googleusercontent.com',
+            pathname: '**',
+          },
+          
         ],
       }
 };

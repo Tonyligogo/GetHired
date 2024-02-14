@@ -2,8 +2,10 @@
 import Link from 'next/link'
 import styles from "./page.module.css"
 import Image from 'next/image';
-import { usePathname } from 'next/navigation'
-import { useUser, UserButton } from "@clerk/nextjs";
+import { usePathname } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
+
+// import { useUser, UserButton } from "@clerk/nextjs";
 
 const links = [
   {
@@ -20,8 +22,10 @@ const links = [
 
 function Navbar() {
 
+  const {status, data:session} = useSession();
+
   const location = usePathname()
-  const { isLoaded, isSignedIn, user } = useUser()
+  // const { isLoaded, isSignedIn, user } = useUser()
 
   return (
     <div className={styles.nav}>
@@ -33,13 +37,25 @@ function Navbar() {
         <Link href="/jobs/new" className={`${styles.btnLink} ${location === 'createJobForm' && styles.active}`}>Post a Job</Link>
       </div>
       <div className={styles.rightSideNav}>
-      {!isSignedIn && <Link href="/sign-in" className={`${styles.btnLink} ${location === 'signIn' && styles.active}`}>Sign in</Link> }
-      {!isSignedIn && <Link href="/sign-up" className={`${styles.postJobLink} ${location === 'signUp' && styles.active}`}>Sign up</Link>} 
 
-      { isSignedIn && <span className={styles.user}>
+      {status === 'authenticated' ?
+       <button className={styles.logout} onClick={()=>signOut('google')}>Logout</button>
+       :
+       <Link href="/login" className={`${styles.btnLink} ${location === 'login' && styles.active}`}>Sign in</Link>
+      }
+      {/* {!isSignedIn && <Link href="/sign-in" className={`${styles.btnLink} ${location === 'signIn' && styles.active}`}>Sign in</Link> } */}
+      {/* {!isSignedIn && <Link href="/sign-up" className={`${styles.postJobLink} ${location === 'signUp' && styles.active}`}>Sign up</Link>}  */}
+
+      {session && 
+          <span className={styles.user}>
+            <span>{session?.user?.name}</span>
+            <Image src={`${session?.user?.image}`} alt='user image' height={24} width={24} className={styles.userImage}/>
+          </span>
+        }
+      {/* { isSignedIn && <span className={styles.user}>
         <span>{user.fullName ? user.fullName : user.username}</span>
         <UserButton afterSignOutUrl='/' />
-      </span>}
+      </span>} */}
       </div>
     </div>
   )

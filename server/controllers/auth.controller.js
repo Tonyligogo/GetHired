@@ -1,11 +1,11 @@
 import User from '../models/user.model.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const register = async (req, res)=>{
     try{
-        const username = await User.findOne({username:req.body.username})
-        if(username) return res.status(409).send('This username already exists!')
+        const email = await User.findOne({email:req.body.email})
+        if(email) return res.status(409).send('This email already exists!')
         const hash = bcrypt.hashSync(req.body.password, 5)
         const newUser = new User({
             ...req.body,

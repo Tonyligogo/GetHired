@@ -1,8 +1,8 @@
+
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import JobDetailsPage from '@/components/JobDetailsPage';
 import { server } from '@/server';
-import ActionSidebar from './actionSidebar';
 
 const getJobs = cache(async (slug) => {
     const res = await fetch(`${server}post/getSinglePost/${slug}`)  
@@ -32,7 +32,7 @@ export default async function page({params:{slug}}) {
     return(
         <main>
             <JobDetailsPage jobPost={jobPost}/>
-            <ActionSidebar job={jobPost}/>
         </main>
     )
 }
+

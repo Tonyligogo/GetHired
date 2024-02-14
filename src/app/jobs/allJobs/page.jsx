@@ -27,7 +27,7 @@ export function generateMetadata({
   }
 
 export default function AllJobs({searchParams:{q, type, location, remote}}) {
-  const { userId } = auth();
+  // const { userId } = auth();
 
     const filterValues = {
         q,
@@ -45,7 +45,8 @@ export default function AllJobs({searchParams:{q, type, location, remote}}) {
     <section className={styles.jobs}>
       <JobFilterSidebar defaultValues={filterValues}/>
       <JobResults filterValues={filterValues}/>
-      {userId &&  <UserProfileSidebar/> }
+      {/* {userId &&  <UserProfileSidebar/> } */}
+       <UserProfileSidebar/> 
     </section>
   </main>
   )

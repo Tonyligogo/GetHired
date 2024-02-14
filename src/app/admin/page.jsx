@@ -1,9 +1,10 @@
 import SingleJob from "@/components/singleJob/SingleJob";
 import Link from "next/link";
 import styles from "./page.module.css"
+import { server } from "@/server";
 
 const fetchJobs = async ()=>{
-    const res = await fetch('http://localhost:8000/post/getUnapprovedJobs') 
+    const res = await fetch(`${server}post/getUnapprovedJobs`)
     if(!res.ok){
         console.log('There was an error fetching the unappproved jobs..from admin page',res)
     }

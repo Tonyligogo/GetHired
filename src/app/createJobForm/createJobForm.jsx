@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import { createJobPosting } from "../jobs/new/actions"
 import axios from "axios"
 import { redirect } from "next/navigation"
+import { server } from "@/server"
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -70,10 +71,11 @@ export default function CreateJobForm() {
                formData.append(key, value)
             }
         })
+        console.log(formData, 'my form')
         try {
-            await axios.post('http://localhost:8000/post/createPost', formData)
+            await axios.post( `${server}post/createPost`, formData)
             .then((res)=>{
-                console.log(res)
+                // console.log(res)
                 redirect('/job-submitted')
             })
         } catch (error) {

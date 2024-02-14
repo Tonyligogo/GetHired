@@ -4,8 +4,13 @@ import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import frontImage from "../../../public/jobSearchAnim2.png"
 import Link from 'next/link';
+import { useSession } from 'next-auth/react'; 
+
 
 export default function LandingPage() {
+
+  const {status, data:session} = useSession();
+  console.log(session);
 
   return (
     <div>

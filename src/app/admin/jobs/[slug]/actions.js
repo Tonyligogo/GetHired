@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import axios from 'axios'
 import {User} from "@clerk/nextjs/server"
 import { auth } from "@clerk/nextjs";
+import { server } from '@/server';
 
 
 export async function approveSubmission(prevState, formData) {
@@ -26,7 +27,7 @@ export async function approveSubmission(prevState, formData) {
             throw new Error("Not authorised to access this page")
         }
         
-        await axios.put('http://localhost:8000/post/approveJobUpdate/'+jobId)
+        await axios.put(`${server}post/approveJobUpdate/${jobId}`)
         .then((res)=>{
             console.log(res)
         }).catch((err)=>{
@@ -58,7 +59,7 @@ export async function deleteJob(prevState, formData){
 
         // await fetch('http://localhost:8000/post/deleteApprovalJob'+jobId)
 
-        await axios.delete('http://localhost:8000/post/deleteApprovalJob'+jobId)
+        await axios.delete(`${server}post/deleteApprovalJob${jobId}`)
         .then((res)=>{
             console.log(res)
         }).catch((err)=>{

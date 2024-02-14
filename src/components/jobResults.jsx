@@ -1,8 +1,9 @@
 import Link from "next/link";
 import SingleJob from "./singleJob/SingleJob";
+import { server } from "@/server";
 
 const fetchJobs = async ()=>{
-  const res = await fetch('http://localhost:8000/post/getPosts', 
+  const res = await fetch(`${server}post/getPosts`, 
   {next:{ revalidate: 100}}
   ) 
   if(!res.ok){

@@ -10,14 +10,13 @@ const userSchema = new Schema({
     email:{
         type: String,
         required: true,
+        unique: true
     },
     password:{
-        type: String,
-        required: true,
+        type: String
     },
     image:{
-        type: String,
-        required: false,
+        type: String
     },
 },{timestamps: true});
 

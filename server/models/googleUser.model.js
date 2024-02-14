@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const { Schema } = mongoose;
+const { Schema, models } = mongoose;
 
 const googleUserSchema = new Schema({
     username:{
@@ -12,4 +12,8 @@ const googleUserSchema = new Schema({
     }
 },{timestamps: true});
 
-export default mongoose.model('GoogleUser', googleUserSchema)
+const GoogleUser = models.GoogleUser || mongoose.model('GoogleUser', googleUserSchema)
+
+export default GoogleUser;
+
+// export default mongoose.model('GoogleUser', googleUserSchema)

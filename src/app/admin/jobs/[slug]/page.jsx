@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import AdminSidebar from "./AdminSidebar";
 
 const fetchJob = async (slug)=>{
-    const res = await fetch('http:/localhost:8000/post/getSinglePost/'+slug)  
+    const res = await fetch(`${server}post/getSinglePost/${slug}`)  
     if(!res.ok) return notFound();
     const singleJob = await res.json();
     return singleJob;

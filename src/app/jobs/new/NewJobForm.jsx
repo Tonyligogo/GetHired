@@ -13,6 +13,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
 import axios from "axios"
 import { useRouter } from "next/navigation"
+import { server } from "@/server"
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -72,7 +73,7 @@ export default function CreateJobForm() {
             }
         })
         try {
-            await axios.post('http://localhost:8000/post/createPost', formData)
+            await axios.post(`${server}post/createPost`, formData)
             .then((res)=>{
                 console.log(res)
                 router.push("/job-submitted")
