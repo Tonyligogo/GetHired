@@ -5,18 +5,22 @@ import Image from 'next/image';
 import frontImage from "../../../public/jobSearchAnim2.png"
 import Link from 'next/link';
 import { useSession } from 'next-auth/react'; 
+import { useUserContext } from '../context/UserProvider';
 
 
 export default function LandingPage() {
 
   const {status, data:session} = useSession();
-  console.log(session);
+  console.log(session, 'session in landingpage');
+  const {setUser} = useUserContext()
+  setUser(session?.user.name)
 
   return (
     <div>
       <div className={styles.HomeContainer}>
         <div className={styles.left}>
-          <h2 className={styles.title}>Jump-Start Your <span className={styles.careerWord} style={{color: "#f87d34"}}>Career <span className={styles.stars}><Icon icon="bi:stars" style={{color: "#f87d34"}} /></span> </span> <br /></h2>
+        {/* <span className={styles.stars}><Icon icon="bi:stars" style={{color: "#f87d34"}} /></span> */}
+          <h3 className={styles.title}>Jump-Start Your <span className={styles.careerWord} style={{color: "#f87d34"}}>Career </span> <br /></h3>
           <div className={styles.subscribe}>
             <span className={styles.text}>The Home of Your</span>
             <div className={styles.joinBtn}>
@@ -27,7 +31,7 @@ export default function LandingPage() {
           </div>
         </div>
         {/* <div className={styles.right} ref={animationContainer}></div> */}
-        <div className={styles.right}> <Image src={frontImage} alt='front end image' width={612} height={450} /> </div>
+        <div className={styles.right}> <Image src={frontImage} alt='front end image' width={500} height={400} /> </div>
       </div>
       <div className={styles.fiverrBusiness}>
         <div className={styles.fiverrBsContainer}>
@@ -73,9 +77,9 @@ export default function LandingPage() {
             <div className={styles.leftSideBody}>
               <ul>
                 <li>
-                    <Icon icon="jam:write" width="30"/>  
+                    <Icon icon="jam:write" width="38"/>  
                     <p>
-                        Meet clients you’re excited to work with and take
+                        Meet clients you&apos;re excited to work with and take
 your career or business to new heights
                     </p>
                 </li>
@@ -90,14 +94,7 @@ your career or business to new heights
                     <p>
                         Control when, where, and how you work
                     </p>
-                </li>
-                <li>
-                <Icon icon="mdi:badge-outline" width="30"/>  
-                    <p>
-                        Explore different ways to earn
-                    </p>
-                </li>
-                
+                </li> 
               </ul>
             </div>
             <button className={styles.exploreBs}>Find opportunities</button>

@@ -4,6 +4,7 @@ import styles from "./page.module.css"
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 
 // import { useUser, UserButton } from "@clerk/nextjs";
 
@@ -23,6 +24,16 @@ const links = [
 function Navbar() {
 
   const {status, data:session} = useSession();
+  const [username, setUsername] = useState('')
+  const [id, setId] = useState('')
+  useEffect(()=>{
+    setUsername(session?.user?.name)
+    setId(session?.user?.id)
+    localStorage.setItem("id", session?.user?.id); 
+    localStorage.setItem("name", session?.user?.name); 
+  },[])
+  console.log(session, 'from navbar')
+  console.log(id)
 
   const location = usePathname()
   // const { isLoaded, isSignedIn, user } = useUser()
@@ -34,28 +45,24 @@ function Navbar() {
         {links.map((link)=>(
           <Link key={link.id} href={link.url} className={`${location === link?.url && styles.active}`} >{link.title}</Link>
         ))}
-        <Link href="/jobs/new" className={`${styles.btnLink} ${location === 'createJobForm' && styles.active}`}>Post a Job</Link>
+        {/* <Link href="/jobs/new" className={`${styles.btnLink} ${location === 'createJobForm' && styles.active}`}>Post a Job</Link> */}
       </div>
       <div className={styles.rightSideNav}>
 
-      {status === 'authenticated' ?
-       <button className={styles.logout} onClick={()=>signOut('google')}>Logout</button>
+        {session && 
+            <span className={styles.user}>
+              <span>{session?.user?.name}</span>
+              {session?.user?.image && <Image src={`${session?.user?.image}`} alt='user image' height={24} width={24} className={styles.userImage}/>}
+            </span>
+          }
+      {session ?
+       <button className={styles.logout} onClick={()=>signOut()}>Logout</button>
        :
        <Link href="/login" className={`${styles.btnLink} ${location === 'login' && styles.active}`}>Sign in</Link>
       }
-      {/* {!isSignedIn && <Link href="/sign-in" className={`${styles.btnLink} ${location === 'signIn' && styles.active}`}>Sign in</Link> } */}
-      {/* {!isSignedIn && <Link href="/sign-up" className={`${styles.postJobLink} ${location === 'signUp' && styles.active}`}>Sign up</Link>}  */}
-
-      {session && 
-          <span className={styles.user}>
-            <span>{session?.user?.name}</span>
-            <Image src={`${session?.user?.image}`} alt='user image' height={24} width={24} className={styles.userImage}/>
-          </span>
-        }
-      {/* { isSignedIn && <span className={styles.user}>
-        <span>{user.fullName ? user.fullName : user.username}</span>
-        <UserButton afterSignOutUrl='/' />
-      </span>} */}
+      {!session &&
+       <Link href="/register" className={`${styles.btnLink} ${location === 'register' && styles.active}`}>Create account</Link>
+      }
       </div>
     </div>
   )

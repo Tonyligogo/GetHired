@@ -1,36 +1,38 @@
 import jwt from "jsonwebtoken";
 import Post from "../models/post.model.js";
 import { connect } from "../index.js";
+import Employer from "../models/employer.model.js";
 
 export const createPost = async (req, res)=>{
-    try{
-        // const token = req.cookies.accessToken;
-        // if(!token) return res.status(401).send('Not logged in');
-        // jwt.verify(token, process.env.JWT_KEY, async (err, info)=>{
-        //   if(err){
-        //     console.log(err, 'This is a token verification error')
-        //     return
-        //   }          
+    try{      
           const newPost = new Post({
+              owner:req.params.id,
               title: req.body.title,
               type:req.body.type,
               companyName:req.body.companyName,
               locationType:req.body.locationType,
               salary:req.body.salary,
-              applicationEmail:req.body.applicationEmail,
-              applicationUrl:req.body.applicationUrl,
               location:req.body.location,
               description: req.body.description,
+              requirements: req.body.requirements,
               approved: req.body.approved
           })
-          // if(req.body.companyLogo){
-          //     newPost.companyLogo = req.file.path
-          // }
           await newPost.save();
+            let employer = await Employer.findOne({user:req.params.id})
+            if(!employer){
+              employer = new Employer({user:req.params.id})
+              await employer.save()
+            }
+            employer = await Employer.findOneAndUpdate(
+              { user: req.params.id },
+              { $addToSet: { postedJobs: newPost._id } },
+              { new: true }
+            );
           res.status(201).json({
               status: true,
               message: 'Post has been created',
               post: newPost,
+              employer:employer
             });
         
     }catch(err){
@@ -63,20 +65,20 @@ export const getSinglePost = async (req, res)=>{
             res.status(201).json({
               post: result,
               success: true,
-              message: "Single blog fetched",
+              message: "Single job fetched",
             });
           } else {
             res.status(401).json({
               success: false,
               message:
-                "There is no blog with the specified id",
+                "There is no job with the specified id",
             });
           }
         });
       } catch (error) {
         res.status(500).json({
           success: false,
-          message: "Server Error: error while fetching blog",
+          message: "Server Error: error while fetching job",
           error: error,
         });
       }

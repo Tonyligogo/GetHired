@@ -3,6 +3,7 @@ import { cache } from 'react';
 import JobDetailsPage from '@/components/JobDetailsPage';
 import { server } from '@/server';
 import ActionSidebar from './actionSidebar';
+import styles from '../allJobs/page.module.css'
 
 const getJobs = cache(async (slug) => {
     const res = await fetch(`${server}post/getSinglePost/${slug}`)  
@@ -30,9 +31,9 @@ export async function generateMetadata({params:{slug}}){
 export default async function page({params:{slug}}) {
     const jobPost = await getJobs(slug)
     return(
-        <main>
+        <main className={styles.singleJobWrapper}>
             <JobDetailsPage jobPost={jobPost}/>
-            <ActionSidebar job={jobPost}/>
+              <ActionSidebar job={jobPost}/>
         </main>
     )
 }

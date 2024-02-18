@@ -1,8 +1,11 @@
 "use client"
 
 import { useFormState } from 'react-dom'
-// import styles from './Admin.module.css'
+import styles from '../allJobs/page.module.css'
 import { apply } from './actions';
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+
 
 export default function ActionSidebar({job}) {
 
@@ -19,8 +22,8 @@ function ApplyButton({jobId}){
 
     return (
     <form action={formAction}>
-        <input name='jobId' value={jobId} readOnly/>
-        <button type='submit'>Apply</button>
+        <input name='jobId' hidden value={jobId} readOnly/>
+        <button type='submit' className={styles.actionSidebarBtn}>Apply Now</button>
         {formState?.error && ( <p>{formState.error}</p> )}
     </form>
     )

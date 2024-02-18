@@ -6,71 +6,113 @@ import GoogleUser from "../../../../../server/models/googleUser.model.js";
 import axios from 'axios'
 import CredentialsProvider from "next-auth/providers/credentials";
 import Post from "../../../../../server/models/post.model.js";
+import bcrypt from 'bcryptjs'
+import server from '@/server.js'
 
-const authOptions = {
+export const authOptions = {
     providers: [
       GoogleProvider({
         clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        // authorization: {
+        //   params: {
+        //     prompt: "consent",
+        //     access_type: "offline",
+        //     response_type: "code"
+        //   }
+        // }
       }),
       CredentialsProvider ({
-        name:"Credentials",
-        credentials: {
-          username:{
-            label: "Username:",
-            type: "text",
-            placeholder: "Enter your username"
-          },
-          password:{
-            label: "Password:",
-            type: "password",
-            placeholder: "Enter your password"
-          }
-        },
+        name:"credentials",
+        credentials: {},
         async authorize(credentials){
-          // const user = await User.findOne({username : credentials.username});
-          const data = {username: credentials?.username, password:credentials?.password}
-          const user = await axios.post('http://localhost:8008/auth/login', data)
-                                .then((res)=> console.log(res));
-          // if (credentials?.username === res.data.username && credentials?.password === res.data.password ) return user;
-          if(user)console.log('user found')
-        else return null;
+          await connect(process.env.MONGO_URL)
+          try {
+            const user = await User.findOne({username : credentials.username});
+            if(!user){
+              console.log('user not found')
+              return null;
+            }
+  
+            const passwordMatch = await bcrypt.compare(credentials.password, user.password);
+            if(!passwordMatch){
+              return null;
+            }
+            return user;
+          } catch (error) {
+            console.log(error, 'from nextauth route js')
+          }
         },
       })
     ],
     session:{
       strategy: 'jwt'
     },
-    secret:"vygcdrdre8798723cgfcdzty",
+    secret:process.env.NEXTAUTH_SECRET,
+    pages:{
+      signIn: "/login"
+    },
     callbacks: {
       async signIn({user, account}){
-        const {email, name} = user;
+        const {email, name, id} = user;
+        const hash = bcrypt.hashSync(id, 5)
         const data = {
           email,
-          username:name
+          username:name,
+          password:hash
         }
         if(account.provider === 'google'){
           try {
-            await connect()
-            var id = '65ca066b915cad8a0fb22002'
-             await GoogleUser.findById(id)
-            .then((res) =>{
-              console.log('this is the response')
-            })
-            if(!emailExists){
+            await connect(process.env.MONGO_URL)
+            let user = await User.findOne({email})
+            console.log(user)
+            if(!user){
               console.log('email does not exist')
-              const res = await axios.post('http://localhost:8008/user/googleUser', data)
-              if(res.ok) {
-                console.log(res, 'the response i am looking for')
-                return user
-              }
-            }else console.log('this email exists')
+              // const res = await axios.post(`${server}auth/register`, data)
+              user = User.create({
+                username:data.username,
+                email:data.email,
+                password:data.password
+              })
+            };
+            return user
           } catch (error) {
-            console.log( 'the error i dont want')
+            console.log('Error from next auth route',error)
           }
         }
         return user;
-      }
+      },
+      async jwt({token, user, session, account}){
+        if (account) {
+          token.accessToken = account.access_token
+        }
+        if(user){
+          //pass user id and username to token
+          return{
+            ...token,
+            id: user._id,
+            name: user.username,
+          };
+        };
+        return token
+      },
+      async session({session, user, token}){
+        const sessionUser = await User.findOne({email:session.user.email});
+        session.accessToken = token.accessToken
+        // session.user.id = sessionUser._id,
+        // session.user.name = sessionUser.username
+        // console.log({session, user, token})
+        return{
+          // pass in user id and username
+          ...session,
+          user:{
+            ...session.user,
+            id:token.id || sessionUser._id,
+            name:token.username || sessionUser.username
+          }
+        }
+      },
+      
     }
     
 }

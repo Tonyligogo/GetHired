@@ -26,6 +26,7 @@ export default function CreateJobForm() {
     const form = useForm({
         resolver:zodResolver(createJobSchema)
     })
+    // const form = useForm()
 
     const {
         register,
@@ -210,9 +211,9 @@ export default function CreateJobForm() {
                 }
                 />
 
-                    { watch("description") && 
+                    {/* { watch("description") && 
                         (watch("description"))
-                    }
+                    } */}
                 </div>
                 <div>
                     <label htmlFor="salary">Salary</label>

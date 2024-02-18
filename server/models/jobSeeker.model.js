@@ -17,7 +17,7 @@ const jobSeekerSchema = new Schema({
     cv: {
         type: Schema.Types.ObjectId,
         ref: 'CV'
-      },
+      }
 
 },{timestamps: true});
 

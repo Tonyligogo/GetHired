@@ -2,6 +2,11 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const postSchema = new Schema({
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref:'User',
+        required: true,
+      },
     title:{
         type: String,
         required: true,
@@ -16,7 +21,11 @@ const postSchema = new Schema({
     },
     description:{
         type: String,
-        required: false,
+        required: true,
+    },
+    requirements:{
+        type: String,
+        required: true,
     },
     salary:{
         type: Number,
@@ -26,25 +35,20 @@ const postSchema = new Schema({
         type: String,
         required: true,
     },
-    applicationEmail:{
-        type: String,
-        required: false,
-    },
-    applicationUrl:{
-        type: String,
-        required: false,
-    },
     location:{
-        type: String,
-        required: false,
-    },
-    companyLogo:{
         type: String,
         required: false,
     },
     approved: {
         type: Boolean,
         default: false,
+    },
+    applicants: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User' 
+        }],
+        default:() => []
     }
 },{timestamps: true});
 

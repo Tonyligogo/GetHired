@@ -4,7 +4,7 @@ import { deletePost, createPost, getPosts, getSinglePost, getUnapprovedJobs, app
 
 const router = express.Router();
 
-router.post('/createPost', uploads.single('companyLogo'), createPost)
+router.post('/createPost', createPost)
 router.delete('/deletePost/:id', deletePost)
 router.get('/getPosts', getPosts)
 router.get('/getUnapprovedJobs', getUnapprovedJobs)

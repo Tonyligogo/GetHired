@@ -39,21 +39,3 @@
 .text{
     color: gray;
 }
-.skillsWrapper{
-    border: 1px solid lightgrey;
-    border-radius: 10px;
-    padding: 20px;
-    width: 300px;
-    margin: 0 auto;
-}
-.skillsContainer{
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-.skillsContainer > *{
-    background-color: #f3f3f3;
-    border-radius: 4px;
-    padding: 2px 8px;
-    text-align: center;
-}

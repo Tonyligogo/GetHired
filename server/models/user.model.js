@@ -13,11 +13,12 @@ const userSchema = new Schema({
         unique: true
     },
     password:{
-        type: String
+        type: String,
+        // select:false
     },
     image:{
         type: String
-    },
+    }
 },{timestamps: true});
 
 export default mongoose.model('User', userSchema)

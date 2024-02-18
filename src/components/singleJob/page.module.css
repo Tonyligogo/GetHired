@@ -8,36 +8,45 @@
     border: 1px solid lightgrey;
     border-radius: 8px;
     margin-bottom: 8px;
-    padding: 4px;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: space-between;
+    padding: 4px 10px;
 }
 .left{
     display: flex;
     gap: 8px;
     align-items: center;
 }
-.right{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 180px;
-}
 .type{
     text-align: center;
     background-color: rgb(236, 236, 236);
     border-radius: 4px;
-
+    font-size: 14px;
+    padding: 4px;
 }
 .date{
+    color: rgb(68, 68, 68);
+}
+.bottom{
     display: flex;
-    align-items: flex-end;
+    gap: 30px;
+    align-items: center;
+    font-size: 14px;
+    color: rgb(68, 68, 68);
+}
+.location{
+    display: flex;
+
+    align-items: center;
 }
 .wrapper{
     flex-grow: 1;
 }
 .wrapper > div{
     margin-bottom: 8px;
+}
+.skill{
+    background-color: #f3f3f3;
+    border-radius: 4px;
+    padding: 2px 8px;
+    text-align: center;
+    margin-right: 4px;
 }

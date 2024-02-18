@@ -4,9 +4,9 @@ const { Schema } = mongoose;
 const cvSchema = new Schema({
     owner: {
       type: Schema.Types.ObjectId,
-      ref:'User',
       required: true,
     },
+    about: String,
     education: String,
     workExperience: String,
     skills: [String],

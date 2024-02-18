@@ -74,6 +74,7 @@ function Login() {
   }
   const loginWithGoogle = () => {
     signIn("google", {callbackUrl: "/"})
+    router.replace('/');
   }
  
   return (
@@ -105,7 +106,6 @@ function Login() {
                         id="email"
                         type="text" 
                         value={formValues.email} 
-                        ref={userRef} 
                         name="email"
                         autoComplete="off" 
                         required 

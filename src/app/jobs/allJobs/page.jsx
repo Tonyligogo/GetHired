@@ -3,6 +3,9 @@ import JobFilterSidebar from "@/components/jobfiltersidebar/JobFilterSidebar";
 import styles from './page.module.css';
 import { auth } from "@clerk/nextjs";
 import UserProfileSidebar from "@/components/userProfileSidebar/UserProfileSidebar";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 
 export function generateMetadata({
     searchParams: {q, type, location, remote}
@@ -26,8 +29,11 @@ export function generateMetadata({
       return `${titlePrefix}${titleSuffix}`
   }
 
-export default function AllJobs({searchParams:{q, type, location, remote}}) {
+export default async function AllJobs({searchParams:{q, type, location, remote}}) {
   // const { userId } = auth();
+
+  const session = await getServerSession(authOptions);
+  console.log(session, 'this is the session')
 
     const filterValues = {
         q,
@@ -45,7 +51,6 @@ export default function AllJobs({searchParams:{q, type, location, remote}}) {
     <section className={styles.jobs}>
       <JobFilterSidebar defaultValues={filterValues}/>
       <JobResults filterValues={filterValues}/>
-      {/* {userId &&  <UserProfileSidebar/> } */}
        <UserProfileSidebar/> 
     </section>
   </main>

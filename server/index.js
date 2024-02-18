@@ -4,8 +4,10 @@ import mongoose from 'mongoose';
 import userRoute from './routes/user.route.js';
 import postRoute from './routes/post.route.js';
 import jobSeekerRoute from './routes/jobSeeker.route.js';
+import employerRoute from './routes/employer.route.js';
 import jobSeekerCVRoute from './routes/jobSeekerCV.route.js';
 import authRoute from './routes/auth.route.js';
+import reviewRoute from './routes/review.route.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
 
@@ -36,7 +38,9 @@ app.use('/auth', authRoute)
 app.use('/user', userRoute)
 app.use('/post', postRoute)
 app.use('/jobSeeker', jobSeekerRoute)
+app.use('/employer', employerRoute)
 app.use('/jobSeekerCV', jobSeekerCVRoute)
+app.use('/review', reviewRoute)
 
 app.listen(8008, ()=>{
     connect()
