@@ -5,19 +5,17 @@ const { Schema } = mongoose;
 const reviewSchema = new Schema({
   employer: {
     type: Schema.Types.ObjectId,
-    ref: 'Employer',
+    ref: 'User',
     required: true
   },
   jobSeeker: {
-    type: Schema.Types.ObjectId,
-    ref: 'JobSeeker',
+    type: String,
     required: true
   },
-  rating: {
+  star: {
     type: Number,
     required: true,
-    min: 1,
-    max: 5
+    enum:[1,2,3,4,5]
   },
   review: {
     type: String,

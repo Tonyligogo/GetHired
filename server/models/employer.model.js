@@ -13,7 +13,11 @@ const employerSchema = new Schema({
             ref: 'Post' 
         }],
         default:() => []
-    }
+    },
+    coins: { 
+        type: Number, 
+        default: 50 
+      }
 });
 
 export default mongoose.model('Employer', employerSchema);

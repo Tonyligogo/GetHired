@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useState, useEffet, createContext } from "react";
+import { useContext, useState, useEffect, createContext } from "react";
 
 export const UserContext = createContext({
   setUser: () => {},
@@ -9,7 +9,7 @@ export const UserContext = createContext({
 export default function UserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
 
-  useEffet(() => {
+  useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       setCurrentUser(storedUser);

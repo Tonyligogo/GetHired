@@ -7,8 +7,11 @@ import jobSeekerRoute from './routes/jobSeeker.route.js';
 import employerRoute from './routes/employer.route.js';
 import jobSeekerCVRoute from './routes/jobSeekerCV.route.js';
 import authRoute from './routes/auth.route.js';
-import reviewRoute from './routes/review.route.js';
 import cookieParser from 'cookie-parser';
+import reviewRoute from './routes/review.route.js';
+import messageRoute from './routes/message.route.js';
+import hireJobSeekerRoute from './routes/hireJobSeeker.route.js';
+import conversationRoute from './routes/conversation.route.js';
 import cors from 'cors'
 
 const app = express();
@@ -41,6 +44,9 @@ app.use('/jobSeeker', jobSeekerRoute)
 app.use('/employer', employerRoute)
 app.use('/jobSeekerCV', jobSeekerCVRoute)
 app.use('/review', reviewRoute)
+app.use('/conversation', conversationRoute)
+app.use('/message', messageRoute)
+app.use('/hireJobSeeker', hireJobSeekerRoute)
 
 app.listen(8008, ()=>{
     connect()

@@ -1,4 +1,3 @@
-// import { Metadata } from "next"
 import NewJobForm from "./NewJobForm"
 
 export const metadata = {

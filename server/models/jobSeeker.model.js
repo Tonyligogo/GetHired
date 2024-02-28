@@ -1,30 +1,53 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const jobSeekerSchema = new Schema({
+const jobSeekerSchema = new Schema(
+  {
     user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     appliedJobs: {
-        type: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Post' 
-        }],
-        default:() => []
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Post",
+        },
+      ],
+      default: () => [],
+    },
+    employedJobs: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Post",
+        },
+      ],
+      default: () => [],
     },
     cv: {
-        type: Schema.Types.ObjectId,
-        ref: 'CV'
-      }
+      type: Schema.Types.ObjectId,
+      ref: "CV",
+    },
+    totalStars: {
+      type: Number,
+      default: 0,
+    },
+    starNumber: {
+      type: Number,
+      default: 0,
+    },
+    coins: { 
+      type: Number, 
+      default: 50 
+    }
+  },
+  { timestamps: true }
+);
 
-},{timestamps: true});
+export default mongoose.model("JobSeeker", jobSeekerSchema);
 
-export default mongoose.model('JobSeeker', jobSeekerSchema)
-
-
-    // savedJobs: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Post' }]
-
+// savedJobs: [{
+//     type: Schema.Types.ObjectId,
+//     ref: 'Post' }]

@@ -42,7 +42,7 @@ export default async function JobResults({filterValues:{q, type, location, remot
             job?.location?.toLowerCase().includes(searchString) || 
             job?.locationType?.toLowerCase().includes(searchString)
           }).map(job => (
-            <Link key={job._id} href={`/jobs/${job._id}`}> <SingleJob job={job} /> </Link>
+            <Link key={job._id} href={`/jobs/${job._id}`}> <SingleJob job={job}/> </Link>
           ))}
           {jobs.length === 0 &&(
             <p>No jobs found. Try adjusting your search filters</p>

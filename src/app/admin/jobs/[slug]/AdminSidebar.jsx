@@ -20,7 +20,7 @@ function ApproveButton({jobId}){
 
     return (
     <form action={formAction}>
-        <input name='jobId' value={jobId} readOnly/>
+        <input name='jobId' value={jobId} hidden readOnly/>
         <button type='submit'>Approve</button>
         {formState?.error && ( <p>{formState.error}</p> )}
     </form>

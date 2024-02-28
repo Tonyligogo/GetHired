@@ -26,63 +26,81 @@ export const authOptions = {
         name:"credentials",
         credentials: {},
         async authorize(credentials){
-          await connect(process.env.MONGO_URL)
-          try {
-            const user = await User.findOne({username : credentials.username});
-            if(!user){
-              console.log('user not found')
-              return null;
-            }
+          const authResponse = await fetch('http://localhost:8008/auth/login', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(credentials),
+          })
   
-            const passwordMatch = await bcrypt.compare(credentials.password, user.password);
-            if(!passwordMatch){
-              return null;
-            }
-            return user;
-          } catch (error) {
-            console.log(error, 'from nextauth route js')
+          if (!authResponse.ok) {
+            return null
           }
+  
+          const user = await authResponse.json()
+  
+          return user
+          // await connect(process.env.MONGO_URL)
+          // try {
+          //   const user = await User.findOne({email : credentials.email});
+          //   // const res = await axios.post(`${server}auth/login`, data)
+          //   if(!user){
+          //     console.log('user not found')
+          //     return null;
+          //   }
+  
+          //   const passwordMatch = await bcrypt.compare(credentials.password, user.password);
+          //   if(!passwordMatch){
+          //     return null;
+          //   }
+          //   return user;
+          // } catch (error) {
+          //   console.log(error, 'from nextauth route js')
+          // }
         },
       })
     ],
     session:{
-      strategy: 'jwt'
+      strategy: 'jwt',
+      maxAge: 30 * 24 * 60 * 60, // 30 days
     },
     secret:process.env.NEXTAUTH_SECRET,
     pages:{
       signIn: "/login"
     },
     callbacks: {
-      async signIn({user, account}){
-        const {email, name, id} = user;
-        const hash = bcrypt.hashSync(id, 5)
-        const data = {
-          email,
-          username:name,
-          password:hash
-        }
-        if(account.provider === 'google'){
-          try {
-            await connect(process.env.MONGO_URL)
-            let user = await User.findOne({email})
-            console.log(user)
-            if(!user){
-              console.log('email does not exist')
-              // const res = await axios.post(`${server}auth/register`, data)
-              user = User.create({
-                username:data.username,
-                email:data.email,
-                password:data.password
-              })
-            };
-            return user
-          } catch (error) {
-            console.log('Error from next auth route',error)
-          }
-        }
-        return user;
-      },
+      // async signIn({user, account}){
+      //   const {email, name, id} = user;
+      //   const hash = bcrypt.hashSync(id, 5)
+      //   const data = {
+      //     email,
+      //     username:name,
+      //     password:hash
+      //   }
+      //   if(account.provider === 'google'){
+      //     try {
+      //       await connect(process.env.MONGO_URL)
+      //       let user = await User.findOne({email})
+      //       console.log(user)
+      //       if(!user){
+      //         console.log('email does not exist')
+      //         // const res = await axios.post(`${server}auth/register`, data)
+      //         user = User.create({
+      //           username:data.username,
+      //           email:data.email,
+      //           password:data.password
+      //         })
+      //       };
+      //       return user
+      //     } catch (error) {
+      //       console.log('Error from next auth route',error)
+      //     }
+      //   }
+      //   return user;
+      // },
       async jwt({token, user, session, account}){
+        
         if (account) {
           token.accessToken = account.access_token
         }
@@ -91,13 +109,15 @@ export const authOptions = {
           return{
             ...token,
             id: user._id,
-            name: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: user.role,
           };
         };
         return token
       },
       async session({session, user, token}){
-        const sessionUser = await User.findOne({email:session.user.email});
+        // const sessionUser = await User.findOne({email:session.user.email});
         session.accessToken = token.accessToken
         // session.user.id = sessionUser._id,
         // session.user.name = sessionUser.username
@@ -107,8 +127,12 @@ export const authOptions = {
           ...session,
           user:{
             ...session.user,
-            id:token.id || sessionUser._id,
-            name:token.username || sessionUser.username
+            id:token.id,
+            firstName:token.firstName,
+            lastName:token.lastName,
+            role:token.role,
+            // id:token.id || sessionUser._id,
+            // name:token.username || sessionUser.username
           }
         }
       },

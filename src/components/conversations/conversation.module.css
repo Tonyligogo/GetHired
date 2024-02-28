@@ -1,0 +1,36 @@
+.conversation {
+  display: flex;
+  align-items: center;
+  padding: 0 10px 10px 10px;
+  cursor: pointer;
+}
+.conversation:hover{
+  background-color: #f3f3f3;
+}
+
+.conversationImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.conversationName {
+  font-weight: 500;
+  position: relative;
+}
+.notificationCount{
+  position: absolute;
+  top: -5px;
+  right: -18px;
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #1877f2;
+  color: white;
+  font-size: 10px;
+}

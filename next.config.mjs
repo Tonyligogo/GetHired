@@ -23,7 +23,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-// domains:[
-//     "img.clerk.com",
-//     "localhost"
-// ]

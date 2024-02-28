@@ -1,34 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../jobseeker.module.css";
-import profilePic from "../../../../public/react4.jpg";
+import dummyProfile from '../../../../public/userProfileDummy.jpg'
 import Image from "next/image";
 import axios from "axios";
 import { server } from "@/server";
 import { formatDistanceToNow } from "date-fns";
 import { Icon } from "@iconify/react";
-
-const skills = [
-  "User Interface",
-  "Research",
-  "Motion Design",
-  "Wireframe",
-  "Illustration",
-  "3D Design",
-];
+import Link from "next/link";
 
 export default function page({ params: { slug } }) {
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(false);
   const [update, setUpdate] = useState(false);
-
   const [formValues, setFormValues] = useState({
     about: "",
     education: "",
     workExperience: "",
     skills: "",
   });
-  const [loading, setLoading] = useState(false);
   const [skills, setSkills] = useState([]);
 
   function handleChange(e) {
@@ -39,15 +29,14 @@ export default function page({ params: { slug } }) {
     const res = await axios
       .get(`${server}jobSeeker/getJobSeekerDetails/${slug}`)
       .then((res) => {
-        if (res.status === 400) {
-          setError(true);
-        }
         setDetails(res?.data);
         setSkills(
           res?.data?.cv?.skills[0]?.split(",").map((skill) => skill.trim())
         );
-        console.log(res, "this is response");
-      });
+      })
+      .catch(()=>{
+        setError(true)
+      })
   }
   useEffect(() => {
     fetchDetails();
@@ -63,11 +52,9 @@ export default function page({ params: { slug } }) {
       skills: formValues.skills,
     };
 
-    console.log(data, "this is data");
     await axios
       .post(`${server}jobSeeker/jobSeekerCV/postCV/${slug}`, data)
-      .then((res) => {
-        // setUser(res?.data?.username)
+      .then(() => {
         setFormValues({
           about: "",
           education: "",
@@ -90,23 +77,27 @@ export default function page({ params: { slug } }) {
         <aside className={styles.container}>
           <div className={styles.user}>
             <div>
-              <Image
-                src={profilePic}
+              {details?.user?.image ?
+                <Image
+                src={details?.user?.image}
                 className={styles.profilePic}
                 alt="user Profile picture"
                 width={120}
                 height={120}
               />
+              :
+              <Image src={dummyProfile} alt='user Profile picture' width={150} height={150} />
+            }
             </div>
             <div>
-              {/* <h2 className={styles.name}>{user?.firstName} {user?.lastName}</h2> */}
-              <h3 className={styles.name}>{details?.user?.username}</h3>
-              <span className={styles.text}>Frontend Web Developer</span>
+              <h3 className={styles.name}>{details?.user?.firstName} {details?.user?.lastName}</h3>
+              {details?.cv && <span className={styles.text}>{details?.cv?.about}</span>}
             </div>
           </div>
+          <Link href="/messenger">Conversations</Link>
         </aside>
         <div>
-          {details?.cv && (
+          {details?.cv ? (
             <div className={styles.cv}>
               <div>
                 <h4>About You</h4>
@@ -129,10 +120,10 @@ export default function page({ params: { slug } }) {
                 ))}
               </div>
             </div>
-          )}
+          ): <p>Write your cv! It will help you land a job much easier if you have it!</p> }
         </div>
         
-        {!update ? <button onClick={()=> setUpdate(true)}>Update</button>
+        {!update ? <button onClick={()=> setUpdate(true)}>{details?.cv ? 'Update CV' : 'Write CV'}</button>
         : <div>
           <h3>Your Profile</h3>
           <form onSubmit={handleSubmit} className={styles.form}>
@@ -145,7 +136,7 @@ export default function page({ params: { slug } }) {
                 required
                 id="about"
                 name="about"
-                placeholder="Write something about what you do"
+                placeholder="E.g., UI Designer"
               />
             </div>
             <div>
@@ -189,8 +180,8 @@ export default function page({ params: { slug } }) {
         </div>}
         {update && <button onClick={()=> setUpdate(false)}>Cancel</button>}
       </section>
-      <section>
-        {error && <p>No details for you buddy</p>}
+      {error && <p>No details for you buddy</p>}
+      <section className={styles.rightSection}>
         <div>
           <h3 className={styles.appliedJobs}>Applied Jobs</h3>
           {details?.appliedJobs?.map((job) => (
@@ -209,7 +200,7 @@ export default function page({ params: { slug } }) {
                     </div>
                     <div className={styles.bottom}>
                       <span>Ksh {job?.salary}</span>
-                      <span className={styles.location}><Icon icon="mdi:location-on-outline" />{job?.locationType}, {job?.location}</span>
+                      <span className={styles.location}><Icon icon="mdi:location-on-outline" />{job?.locationType} {job?.location}</span>
                       <span className={styles.type}>{job?.type}</span>
                     </div>
                   </div>

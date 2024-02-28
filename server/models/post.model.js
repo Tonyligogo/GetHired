@@ -37,11 +37,20 @@ const postSchema = new Schema({
     },
     location:{
         type: String,
-        required: false,
+        required: true,
     },
     approved: {
         type: Boolean,
         default: false,
+    },
+    status:{
+        type: String,  // "open", "closed",
+        default: 'open',
+    },
+    employedJobSeeker:{
+        type:Schema.Types.ObjectId,
+        ref:'JobSeeker',
+        default:null
     },
     applicants: {
         type: [{
@@ -49,7 +58,15 @@ const postSchema = new Schema({
             ref: 'User' 
         }],
         default:() => []
+    },
+    reservedApplicants: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User' 
+        }],
+        default:() => []
     }
+    
 },{timestamps: true});
 
 export default mongoose.model('Post', postSchema)

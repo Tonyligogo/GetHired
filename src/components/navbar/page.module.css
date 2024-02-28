@@ -28,6 +28,8 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    position: relative;
+    cursor: pointer;
 }
 .profilePic{
     border-radius: 50%;
@@ -58,4 +60,15 @@
 .userImage{
     border-radius: 50%;
     object-fit: cover;
+}
+.modal{
+    position: absolute;
+    top: 30px;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+z-index: 100;
 }

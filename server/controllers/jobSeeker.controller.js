@@ -30,8 +30,8 @@ export const applyForJob = async (req, res) => {
 
   try {
     // Check if the job seeker exists
-    const user = await User.findById(id2);
-    if (!user) {
+    let jobSeeker = await JobSeeker.findOne({ user: id2 });
+    if (!jobSeeker) {
       return res.status(404).json({ error: "Job seeker not found" });
     }
 
@@ -39,6 +39,13 @@ export const applyForJob = async (req, res) => {
     const job = await Post.findById(id);
     if (!job) {
       return res.status(404).json({ error: "Job not found" });
+    }
+
+    // Check if the jobSeeker has enough coins
+    if (jobSeeker.coins < 5) {
+      return res.status(403).json({ error: 'Insufficient coins to apply for a job' });
+    }else{
+      jobSeeker.coins -= 5;
     }
 
     // Add the jobSeeker id to the applicants array of the post
@@ -49,7 +56,6 @@ export const applyForJob = async (req, res) => {
     }
     await job.save()
     
-    let jobSeeker = await JobSeeker.findOne({ user: id2 });
     let cvData = await CV.findOne({ owner: id2 });
 
     if (!jobSeeker) {
@@ -147,3 +153,29 @@ export const postJobSeekerCV = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+export const getSingleCV = async (req, res)=>{
+  try {
+    await CV.findOne({owner:req.params.id}).then((result) => {
+          if (result) {
+            res.status(201).json({
+              cv: result,
+              success: true,
+              message: "Single cv fetched",
+            });
+          } else {
+            res.status(401).json({
+              success: false,
+              message:
+                "There is no cv with the specified id",
+            });
+          }
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Server Error: error while fetching cv",
+          error: error,
+        });
+      }
+}

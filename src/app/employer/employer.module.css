@@ -1,0 +1,200 @@
+.mainContainer{
+    margin-top: 20px;
+    padding-inline: 100px;
+    display: flex;
+    gap: 50px;
+    position: relative;
+    min-height: 60svh;
+}
+.leftSection{
+    flex: 1;
+}
+.rightSection{
+    flex: 2;
+}
+.modal{
+    flex: 1;
+}
+.container{
+    /* max-width: 340px; */
+    /* position: sticky; */
+    /* top: 10px; */
+    height: fit-content;
+}
+.textarea{
+    resize: none;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+}
+.profilePic{
+    border-radius: 50%;
+    border: 2px solid #432cd6;
+}
+.appliedJobs{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.user{
+    /* width: 300px; */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+.user>:first-child{
+    display: grid;
+    place-items: center;
+    margin-bottom: 10px;
+}
+.btn{
+    border: none;
+    background-color: #432cd6;
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.btn:hover{
+    background-color: transparent;
+    outline: 1px solid #432cd6;
+    color: black;
+}
+.text{
+    color: gray;
+}
+.skillsWrapper{
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
+}
+.skillsContainer{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.skillsContainer > *{
+    background-color: #f3f3f3;
+    border-radius: 4px;
+    padding: 2px 8px;
+    text-align: center;
+}
+
+ /* css for the jobs styles */
+
+.jobTitle{
+    margin: 0;
+}
+.wrapper > *{
+    display: block;
+}
+.container2{
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    padding: 4px 10px;
+}
+.type{
+    text-align: center;
+    background-color: rgb(236, 236, 236);
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 4px;
+}
+.date{
+    color: rgb(91, 91, 91);
+}
+.bottom{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    font-size: 14px;
+    color: rgb(91, 91, 91);
+}
+.location{
+    display: flex;
+
+    align-items: center;
+}
+.wrapper{
+    flex-grow: 1;
+}
+.wrapper > div{
+    margin-bottom: 8px;
+}
+.skill{
+    background-color: #f3f3f3;
+    border-radius: 4px;
+    padding: 2px 8px;
+    text-align: center;
+    margin-right: 4px;
+}
+/* cv */
+.cv{
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-bottom: 5px;
+}
+
+/* css for form  */
+
+.form{
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    padding: 8px;
+}
+.form > *{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.applicant{
+    cursor: pointer;
+    background-color: #eaeaea;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.contact{
+    margin-right: 10px;
+}
+
+/* message model */
+.messagePanel{
+    position: absolute;
+    right: 100px;
+    padding: 10px;
+    width: 40%;
+    height: 500px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: -3px 0px 8px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: -3px 0px 8px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -3px 0px 8px 0px rgba(0,0,0,0.75);
+}
+.messagePanelHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.closeBtn{
+    cursor: pointer;
+}
+.sendMessageForm{
+    display: flex;
+    gap: 4px;
+}
+.input{
+    flex-grow: 1;
+    resize: none;
+}

@@ -10,7 +10,7 @@ export async function apply(prevState, formData) {
 
     try {
         const jobId = formData.get("jobId")
-        const userId = '65ce17ceb5f4a315858f364a'
+        const userId = formData.get("userId")
         await axios.post(`${server}jobSeeker/applyForJob/${jobId}/user/${userId}`)
         .then((res)=>{
             console.log(res)
