@@ -8,11 +8,16 @@ import { server } from "@/server";
 import { formatDistanceToNow } from "date-fns";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function page({ params: { slug } }) {
+  const {data:session} = useSession()
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [cvPosted, setCvPosted] = useState(false);
+  const [errPostingCV, setErrPostingCV] = useState(false);
   const [formValues, setFormValues] = useState({
     about: "",
     education: "",
@@ -33,6 +38,7 @@ export default function page({ params: { slug } }) {
         setSkills(
           res?.data?.cv?.skills[0]?.split(",").map((skill) => skill.trim())
         );
+        setCvPosted(false)
       })
       .catch(()=>{
         setError(true)
@@ -45,6 +51,7 @@ export default function page({ params: { slug } }) {
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
+    setErrPostingCV(false)
     const data = {
       about: formValues.about,
       education: formValues.education,
@@ -61,13 +68,16 @@ export default function page({ params: { slug } }) {
           workExperience: "",
           skills: "",
         });
+        setCvPosted(true);
         fetchDetails();
       })
       .catch((err) => {
-        console.log(err);
+        setErrPostingCV(true)
+        console.log(err, 'Error when posting cv');
       })
       .finally(() => {
         setLoading(false);
+        setUpdate(false)
       });
   }
 
@@ -79,7 +89,7 @@ export default function page({ params: { slug } }) {
             <div>
               {details?.user?.image ?
                 <Image
-                src={details?.user?.image}
+                src={`${server}${details?.user?.image}`}
                 className={styles.profilePic}
                 alt="user Profile picture"
                 width={120}
@@ -91,10 +101,24 @@ export default function page({ params: { slug } }) {
             </div>
             <div>
               <h3 className={styles.name}>{details?.user?.firstName} {details?.user?.lastName}</h3>
-              {details?.cv && <span className={styles.text}>{details?.cv?.about}</span>}
+              {details?.cv && <span style={{display:'block'}} className={styles.text}>{details?.cv?.about}</span>}
+              {details?.coins && <span style={{display:'block'}}>Your coins: {details?.coins}</span> }
+              <Link href={`/subscriptionModal/${session?.user?.role}`} className={styles.summary}>Buy coins</Link>
+              {/* <details className={styles.details}>
+              <summary className={styles.summary}>What are coins ?</summary>
+              <div className={styles.detailsDiv}>
+                <h1 className={styles.howItWorksTitle}>What coins are</h1>
+                <ul className={styles.list1}>
+                  <li>Coins are virtual tokens that enable you to apply for jobs.</li>
+                  <li>You are freely given 30 coins upon registering to get you started.</li>
+                  <li>Each job you apply for costs <strong>5 coins</strong>.</li>
+                  <li>You <strong>cannot</strong> apply for a job without at <strong>least 5 coins!</strong></li>
+                </ul>
+                <h1 className={styles.buyCoins}>Buy coins here</h1>
+              </div>
+            </details> */}
             </div>
           </div>
-          <Link href="/messenger">Conversations</Link>
         </aside>
         <div>
           {details?.cv ? (
@@ -121,6 +145,8 @@ export default function page({ params: { slug } }) {
               </div>
             </div>
           ): <p>Write your cv! It will help you land a job much easier if you have it!</p> }
+          {cvPosted && <p>Your CV has been posted successfully.</p> }
+          {errPostingCV && <p>There was an error posting your CV! Please try again.</p> }
         </div>
         
         {!update ? <button onClick={()=> setUpdate(true)}>{details?.cv ? 'Update CV' : 'Write CV'}</button>
@@ -175,15 +201,51 @@ export default function page({ params: { slug } }) {
                 placeholder="Your skills"
               />
             </div>
-            <button type="submit">Save</button>
+            <button type="submit">{loading ? 'Saving CV ...' : 'Save'}</button>
           </form>
         </div>}
         {update && <button onClick={()=> setUpdate(false)}>Cancel</button>}
       </section>
-      {error && <p>No details for you buddy</p>}
+      {error && <p>You have not applied for any jobs.</p>}
       <section className={styles.rightSection}>
         <div>
           <h3 className={styles.appliedJobs}>Applied Jobs</h3>
+
+          {details?.appliedJobs?.length === 0 && (
+            <>
+              <p className={styles.noPostText}>You have not applied for any jobs!</p>
+              <div className={styles.howItWorksWrapper}>
+                <div className={styles.howItWorks}>
+                  <h1 className={styles.howItWorksTitle}>How to apply for a job?</h1>
+                  <span>It&apos;s super easy! In only 4 steps:</span>
+                  <ul className={styles.list}>
+                    <li>
+                      Make sure you have at least 5 coins. If not,{" "}
+                      <Link className={styles.buyCoins} href={`/subscriptionModal/${session?.user?.role}`}>buy coins here</Link>
+                    </li>
+                    <li>Click on the 'All jobs' button in the navbar.</li>
+                    <li>Click on a job you want. You'll be redirected to an apply page.</li>
+                    <li>Apply</li>
+                  </ul>
+                  <span>It&apos;s that easy!</span>
+                </div>
+                <div className={styles.whatAreCoins}>
+                  <h1 className={styles.howItWorksTitle}>What are coins?</h1>
+                  <ul className={styles.list}>
+                    <li>
+                      Coins are virtual tokens that enable you to apply for jobs.
+                    </li>
+                    <li>You need 5 coins to apply for a job.</li>
+                  </ul>
+                  <span>
+                    Toggle the <strong>What are coins</strong> for more
+                    information
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
+
           {details?.appliedJobs?.map((job) => (
             <div key={job._id}>
               <article className={styles.container2}>

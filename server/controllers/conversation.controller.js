@@ -11,6 +11,7 @@ export const createConversation = async (req, res, next)=>{
 
     const newConversation = new Conversation({
         id:employerId + jobSeekerId,
+        jobTitle:req.body.jobTitle,
         employerId:employerObjectId,
         jobSeekerId:jobSeekerObjectId,
         readByEmployer:true,

@@ -35,14 +35,14 @@ export async function deleteJob(prevState, formData){
     try {
         const jobId = formData.get("jobId")
 
-        await axios.delete(`${server}post/deleteApprovalJob${jobId}`)
+        await axios.delete(`${server}post/deleteApprovalJob/${jobId}`)
         .then((res)=>{
             console.log('This is from the jobs actions deleteApprovalJob. Job deleted successfully')
         }).catch((err)=>{
             console.log(err, 'This is from the jobs actions deleteApprovalJob. Job failed to be deleted.')
         })
 
-        revalidatePath("/")
+        revalidatePath("/admin")
 
     } catch (error) {
         let message = "Unexpected error"

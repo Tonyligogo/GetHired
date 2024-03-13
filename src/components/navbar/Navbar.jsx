@@ -6,21 +6,8 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
+import { server } from "@/server";
 
-// import { useUser, UserButton } from "@clerk/nextjs";
-
-const links = [
-  {
-    id: 1,
-    title: "Home",
-    url: "/",
-  },
-  {
-    id: 2,
-    title: "All Jobs",
-    url: "/jobs/allJobs",
-  },
-];
 
 function Navbar() {
 
@@ -41,15 +28,8 @@ function Navbar() {
         </Link>
       </div>
       <div className={styles.links}>
-        {links.map((link) => (
-          <Link
-            key={link.id}
-            href={link.url}
-            className={`${location === link?.url && styles.active}`}
-          >
-            {link.title}
-          </Link>
-        ))}
+        <Link href="/" className={location === '/' && styles.active}>Home</Link>
+       {session?.user?.role === 'JobSeeker' && <Link href="/jobs/allJobs" className={location === '/jobs/allJobs' && styles.active}>All Jobs</Link>}
        {session?.user?.role === 'Employer' && <Link href="/jobs/new" className={`${styles.btnLink} ${location === 'createJobForm' && styles.active}`}>Post a Job</Link>}
       </div>
       <div className={styles.rightSideNav}>
@@ -59,9 +39,9 @@ function Navbar() {
             <span>
               {session?.user?.firstName} {session?.user?.lastName}
             </span>
-            {session?.user?.image ? (
+            {session?.user?.image !== 'undefined' ? (
               <Image
-                src={`${session?.user?.image}`}
+                src={`${server}${session?.user?.image}`}
                 alt="user image"
                 height={24}
                 width={24}
@@ -75,6 +55,9 @@ function Navbar() {
               <Link
                href={`/employer/${session?.user?.id}`}
               >Profile</Link>
+              <Link
+               href="/messenger"
+              >Messages</Link>
             </div>}
             
              {(openModal && session?.user?.role === 'JobSeeker') &&
@@ -82,6 +65,9 @@ function Navbar() {
               <Link
                href={`/jobSeeker/${session?.user?.id}`}
               >Profile</Link>
+              <Link
+               href="/messenger"
+              >Messages</Link>
             </div>}
           </span>
           </>

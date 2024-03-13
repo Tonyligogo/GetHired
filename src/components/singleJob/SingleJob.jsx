@@ -19,6 +19,7 @@ function SingleJob({job}) {
           <span>Ksh {job?.salary}</span>
           <span className={styles.location}>{job?.locationType}, {job?.location}</span>
           <span className={styles.type}>{job?.type}</span>
+          <span className={job?.status === 'open' ? styles.openStatus : styles.closedStatus }>{job?.status}</span>
         </div>
       </div>
     </div>

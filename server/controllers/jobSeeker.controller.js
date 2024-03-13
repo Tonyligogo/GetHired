@@ -23,6 +23,26 @@ export const getJobSeekerDetails = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+export const getRelevantJobSeekers = async (req, res) => {
+  try {
+    const jobSeekers = await JobSeeker.find({ niche: req.query.niche })
+      .populate({ path: "user", options: { strictPopulate: false } })
+      .populate({ path: "cv" })
+      .select("user cv")
+      .exec();
+
+    if (!jobSeekers) {
+      return res.status(401).json({
+        message: "No jobseekers found within your niche.",
+        jobSeekers: null,
+      });
+    }
+    res.json(jobSeekers);
+  } catch (error) {
+    console.error("Error fetching jobseekers within your niche: ", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
 
 // Controller function to apply for a job
 export const applyForJob = async (req, res) => {

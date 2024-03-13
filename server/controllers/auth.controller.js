@@ -14,13 +14,16 @@ export const register = async (req, res)=>{
             ...req.body,
             password: hash
         })
+        if(req.file){
+            newUser.image = req.file.path
+        }
         await newUser.save();
         if(role === 'Employer'){
-            const employer = new Employer({user:newUser._id})
+            const employer = new Employer({user:newUser._id, niche:newUser.niche})
             await employer.save()
         }
         if(role === 'JobSeeker'){
-            const jobSeeker = new JobSeeker({user:newUser._id})
+            const jobSeeker = new JobSeeker({user:newUser._id, niche:newUser.niche})
             await jobSeeker.save()
         }
         res.status(201).send('User has been created')

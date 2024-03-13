@@ -1,10 +1,16 @@
-
+.pageContainer{
+    max-width: 1000px;
+}
 .progress{
     margin: 0;
     padding: 0;
     display: block;
     margin-inline: auto;
     color: #d74221 !important;
+}
+.names{
+    display: flex;
+    gap: 5px;
 }
 .loginPage{
     display: flex;
@@ -14,7 +20,7 @@
 }
 .loginPage .form{
     width: 100%;
-    max-width: 416px;
+    max-width: 450px;
 }
 .loginPage .form .inputBox .label{
     display: block;
@@ -44,6 +50,7 @@
 }
 .loginPage .form .signIn{
     width: 100%;
+    border: none;
     margin-top: 20px;
     padding: 0;
     height: 52px;
@@ -59,19 +66,32 @@
     color: #0d0c22;
     font-size: 26px;
 }
-.form .google{
+.selectedCategory{
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
-    border: 2px solid lightgrey;
-    height: 50px;
-    border-radius: 24px;
-    cursor: pointer;
-    transition: all 300ms ease;
+    gap: 10px;
 }
-.google:hover{
-    border: 2px solid #0d0c22;
+.categoryWrapper{
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.categoryBtn{
+    border: none;
+    background-color: #1877f2;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+.selected{
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background-color: #1877f2;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+    height: 48px;
 }
 .line{
     width: 100%;
@@ -90,7 +110,118 @@
     color: white !important;
     margin-right: 8px;
 }
+.redirectToLogin{
+    margin-top: 5px;
+    text-align: center;
+}
 .registerLink{
     font-size: 14px;
     text-decoration: underline;
+    font-size: 14px;
+    text-decoration: underline;
+    display: inline-block;
+    color: #432cd6;
+}
+.preRegisterWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    flex: 2;
+}
+.bigBtns{
+    text-align: center;
+}
+.title1{
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+}
+.userBtn{
+    display: inline-flex;
+    margin-right: 10px;
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    width: 200px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+.userBtnSelected{
+    display: inline-flex;
+    margin-right: 10px;
+    border-radius: 8px;
+    width: 200px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    background-color: #f3f3f3;
+    border: 2px solid #151619;
+    font-size: 18px;   
+    cursor: pointer; 
+}
+.userBtn:hover{
+    background-color: #f3f3f3;
+    border: 2px solid #151619;
+    cursor: pointer;
+}
+.accountBtn{
+    display: flex;
+    justify-content: center;
+}
+.notAllowed{
+    cursor: not-allowed;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f3f3f3;
+}
+.allowed{
+    background-color: #151619;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 20px;
+}
+
+/* coins explanation css */
+.howItWorksWrapper{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #1877f2;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 8px;
+    align-items: center;
+    flex: 1;
+}
+.list{
+    padding-left: 40px;
+    margin-block-start: 0px;
+}
+.howItWorks{
+    font-size: 14px;
+}
+.howItWorksTitle{
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+    display: inline-flex;
+    align-items: center;
+}
+.howItWorksTitle1{
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+.pageWrapper{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 20px;
 }

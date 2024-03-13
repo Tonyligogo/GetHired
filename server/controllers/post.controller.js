@@ -2,6 +2,8 @@ import Post from "../models/post.model.js";
 import Employer from "../models/employer.model.js";
 
 export const createPost = async (req, res) => {
+  const {requirements} = req.body
+  const requirementsArray = requirements.split(",").map((requirement) => requirement.trim());
   const newPost = new Post({
     owner: req.params.id,
     title: req.body.title,
@@ -10,8 +12,9 @@ export const createPost = async (req, res) => {
     locationType: req.body.locationType,
     salary: req.body.salary,
     location: req.body.location,
+    niche: req.body.niche,
     description: req.body.description,
-    requirements: req.body.requirements,
+    requirements: requirementsArray,
   });
   try {
     let employer = await Employer.findOne({ user: req.params.id });
@@ -54,10 +57,63 @@ export const deletePost = async (req, res) => {
 };
 
 export const getPosts = async (req, res) => {
-  // const token = req.cookies.accessToken;
-  // if(!token) return res.status(401).send('Not logged in');
-  res.json(await Post.find().sort({ createdAt: -1 }).limit(20));
+  const page = parseInt(req.query.page) -1 || 0;
+  const limit = 2
+  try {
+    const jobs = await Post.find()
+    .skip(page*limit)
+    .limit(limit)
+    .sort({ createdAt: -1 })
+
+    const total = await Post.countDocuments()
+
+    // return res.json(jobs);
+    return res.status(201).json({
+      jobs,
+      total,
+      page:page+1,
+      limit,
+      success: true,
+      message: "Jobs fetched successfully",
+    });
+    
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server Error: error while fetching jobs",
+      error: error,
+    });
+  }
 };
+
+export const getFilteredPosts = async (req, res) => {
+  const { title, type, location, locationType } = req.query;
+
+  // Construct case-insensitive regular expressions for each search term
+  const regexTitle = new RegExp(title, 'i');
+  const regexLocationType = new RegExp(locationType, 'i');
+  const regexType = new RegExp(type, 'i');
+  const regexLocation = new RegExp(location, 'i');
+
+  // Construct the query object with case-insensitive regular expressions
+  const query = {
+    status: 'open', 
+    niche: req.body.niche
+  };
+  if (title) query.title = { $regex: regexTitle };
+  if (type) query.type = { $regex: regexType };
+  if (location) query.location = { $regex: regexLocation };
+  if (locationType) query.locationType = { $regex: regexLocationType };
+
+
+  try {
+  // Execute the query and return the results
+  res.json(await Post.find(query).sort({ createdAt: -1 }));
+}catch(error){
+  console.log(error, 'error when fetching jobs')
+}
+};
+
 export const getSinglePost = async (req, res) => {
   try {
     await Post.findById(req.params.id).then((result) => {

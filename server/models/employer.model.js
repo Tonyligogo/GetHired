@@ -14,9 +14,14 @@ const employerSchema = new Schema({
         }],
         default:() => []
     },
+    niche:{
+        type: String,
+        ref:'User',
+        required:true
+      },
     coins: { 
         type: Number, 
-        default: 50 
+        default: 30 
       }
 });
 

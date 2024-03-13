@@ -37,7 +37,7 @@ export const dismissApplicant = async (req, res) => {
     if (!job) {
       return res.status(404).json({ error: 'This post does not exist!' });
     }
-    job.applicants = job.applicants.filter(applicant => applicant._id.toString() !== applicantId);
+    job.applicants = job.applicants.filter(applicant => applicant.toString() !== applicantId);
     await job.save();
 
     // remove the job from list of applied jobs in job seeker's model

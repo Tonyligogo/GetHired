@@ -1,8 +1,8 @@
 .mainContainer{
     margin-top: 20px;
-    padding-inline: 100px;
+    padding-inline: 80px;
     display: flex;
-    gap: 50px;
+    gap: 20px;
     position: relative;
     min-height: 60svh;
 }
@@ -10,15 +10,12 @@
     flex: 1;
 }
 .rightSection{
-    flex: 2;
+    flex: 3;
 }
 .modal{
     flex: 1;
 }
 .container{
-    /* max-width: 340px; */
-    /* position: sticky; */
-    /* top: 10px; */
     height: fit-content;
 }
 .textarea{
@@ -28,15 +25,13 @@
 }
 .profilePic{
     border-radius: 50%;
-    border: 2px solid #432cd6;
+    border: 2px solid #185adb;
 }
 .appliedJobs{
     text-align: center;
     margin-bottom: 20px;
 }
 .user{
-    /* width: 300px; */
-    display: flex;
     align-items: center;
     text-align: center;
     border: 1px solid lightgrey;
@@ -52,7 +47,7 @@
 }
 .btn{
     border: none;
-    background-color: #432cd6;
+    background-color: #185adb;
     padding: 4px 10px;
     border-radius: 4px;
     color: white;
@@ -61,7 +56,7 @@
 }
 .btn:hover{
     background-color: transparent;
-    outline: 1px solid #432cd6;
+    outline: 1px solid #185adb;
     color: black;
 }
 .text{
@@ -94,9 +89,12 @@
 .wrapper > *{
     display: block;
 }
-.container2{
+.postedJobsContainer{
     border: 1px solid lightgrey;
     border-radius: 8px;
+    margin-bottom: 8px;
+}
+.container2{
     margin-bottom: 8px;
     padding: 4px 10px;
 }
@@ -135,11 +133,26 @@
     text-align: center;
     margin-right: 4px;
 }
+.skillsContainer2{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
 /* cv */
-.cv{
+.modal{
+    /* box-shadow: 0px 0px 5px 0px rgba(51, 51, 51, 0.75);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(51, 51, 51, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(51, 51, 51, 0.75); */
     border: 1px solid lightgrey;
     border-radius: 8px;
-    padding: 8px 14px;
+    height: fit-content;
+    padding: 10px;
+    max-width: 360px;
+}
+.about{
+    margin-block: 5px;
+}
+.cv{
     margin-bottom: 5px;
 }
 
@@ -153,48 +166,154 @@
 .form > *{
     display: flex;
     flex-direction: column;
-
+    gap: 5px;
 }
-
+.applicantsWrapper{
+    margin-inline: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    padding-inline: 10px;
+}
+.applicantToggle{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
 .applicant{
     cursor: pointer;
     background-color: #eaeaea;
     padding: 4px 8px;
     border-radius: 4px;
-    display: block;
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 5px;
 }
-
+.dismissBtn{
+    text-align: right;
+    color: red;
+}
+.dismissBtn:hover{
+    background-color: rgb(252, 186, 186);
+    border-radius: 4px;
+    padding: 2px 5px;
+}
 .contact{
     margin-right: 10px;
 }
 
-/* message model */
-.messagePanel{
-    position: absolute;
-    right: 100px;
-    padding: 10px;
-    width: 40%;
-    height: 500px;
-    border-radius: 8px;
-    background-color: white;
-    box-shadow: -3px 0px 8px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: -3px 0px 8px 0px rgba(0,0,0,0.75);
--moz-box-shadow: -3px 0px 8px 0px rgba(0,0,0,0.75);
-}
-.messagePanelHeader{
+/* how it works modal */
+.howItWorksWrapper{
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    gap: 10px;
+    background-color: #1877f2;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 8px;
+    align-items: center;
 }
-.closeBtn{
+.list{
+    padding-left: 20px;
+}
+.howItWorks{
+    font-size: 14px;
+}
+.howItWorksTitle{
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.noPostText{
+    text-align: center;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 10px;
+}
+.buyCoins{
+    font-weight: 500;
+    text-decoration: underline;
     cursor: pointer;
 }
-.sendMessageForm{
-    display: flex;
-    gap: 4px;
+.whatAreCoins{
+    background-color: #151619;
+    color: white;
+    border-radius: 8px;
+    font-size: smaller;
+    padding: 4px 8px;
 }
-.input{
-    flex-grow: 1;
-    resize: none;
+/* what are coins modal */
+.list1{
+    padding-left: 20px;
+    text-align: start;
+    font-size: 14px;
+}
+.details {
+	position: fixed;
+	margin-top: 2rem;
+	color: #6b7280;
+	display: flex;
+	flex-direction: column;
+}
+.details[open] .detailsDiv {
+    animation: scale 0.25s ease;
+  }
+.detailsDiv {
+    background-color: #151619;
+    padding: 1.25rem;
+    border-radius: 8px;
+    position: absolute;
+    max-height: calc(100vh - 100px);
+    width: 400px;
+    max-width: calc(100vw - 2rem);
+    top: -100%;
+    left: 110%;
+    overflow: auto;
+    transform-origin: 0% 0%;
+    color: white;
+}
+.detailsDiv .howItWorksTitle{
+    text-align: start;
+}
+.detailsDiv .buyCoins{
+    text-align: start;
+}
+.summary {
+	display: inline-flex;
+	margin-left: auto;
+	margin-right: auto;
+	justify-content: center;
+	align-items: center;
+    border: none;
+	font-weight: 600;
+	padding: 0.75em 1.25em 0.75em 1.25em;
+    border: 1px solid #185adb;
+	border-radius: 99em;
+    color:#185adb;
+	box-shadow: 0 5px 15px rgba(#000, 0.1);
+	list-style: none;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.15s ease;
+	position: relative;
+	
+}
+.summary:hover,
+.summary:focus{
+    background-color: #185adb;
+    color: white;
+
+}
+
+@keyframes scale {
+	0% {
+		transform: scale(0);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+.activeTab{
+    text-decoration: underline;
+    text-decoration-color: #185adb;
 }

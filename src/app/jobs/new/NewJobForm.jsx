@@ -27,7 +27,7 @@ export default function CreateJobForm() {
 
   useEffect(() => {
     if (session?.user?.role !== "Employer") {
-      router.push("/");
+      router.back();
     }
   }, []);
   const userId = session?.user?.id;
@@ -62,7 +62,7 @@ export default function CreateJobForm() {
     const searchWords = locationSearchInput.split(" ");
 
     return cityList
-      .map((city) => `${city.name}, ${city.capital}`)
+      .map((city) => {city.name})
       .filter(
         (city) =>
           city.toLowerCase().startsWith(searchWords[0].toLowerCase()) &&
@@ -81,6 +81,7 @@ export default function CreateJobForm() {
       locationType: values.locationType,
       salary: values.salary,
       location: values.location,
+      niche: session?.user?.niche,
       description: values.description,
       requirements: values.requirements,
     };
@@ -88,7 +89,8 @@ export default function CreateJobForm() {
       await axios
         .post(`${server}employer/createPost/${userId}`, data)
         .then(() => {
-          router.push("/job-submitted");
+          // router.push("/job-submitted");
+          router.push(`/employer/${userId}`);
         });
     } catch (error) {
       console.log(error, "This error is in createjobform");
@@ -122,7 +124,7 @@ export default function CreateJobForm() {
               id="title"
               placeholder="e.g. Frontend Developer"
             />
-            {errors.title?.message && <p>{errors.title?.message}</p>}
+            {errors.title?.message && <p className={styles.error}>{errors.title?.message}</p>}
           </div>
           <div>
             <label className={styles.label} htmlFor="type">
@@ -141,7 +143,7 @@ export default function CreateJobForm() {
                 <option key={idx}>{jobType}</option>
               ))}
             </select>
-            {errors.type?.message && <p>{errors.type?.message}</p>}
+            {errors.type?.message && <p className={styles.error}>{errors.type?.message}</p>}
           </div>
           <div>
             <label htmlFor="companyName">Company name</label>
@@ -151,7 +153,7 @@ export default function CreateJobForm() {
               placeholder="Your company name"
             />
             {errors.companyName?.message && (
-              <p>{errors.companyName?.message}</p>
+              <p className={styles.error}>{errors.companyName?.message}</p>
             )}
           </div>
           <div>
@@ -177,7 +179,7 @@ export default function CreateJobForm() {
               ))}
             </select>
             {errors.locationType?.message && (
-              <p>{errors.locationType?.message}</p>
+              <p className={styles.error}>{errors.locationType?.message}</p>
             )}
           </div>
           <div>
@@ -222,7 +224,7 @@ export default function CreateJobForm() {
               placeholder="Describe your requirements for the job"
             />
             {errors.requirements?.message && (
-              <p>{errors.requirements?.message}</p>
+              <p className={styles.error}>{errors.requirements?.message}</p>
             )}
           </div>
           <div>
@@ -256,12 +258,12 @@ export default function CreateJobForm() {
           <div>
             <label htmlFor="salary">Salary</label>
             <input {...register("salary")} id="salary" type="number" />
-            {errors.salary?.message && <p>{errors.salary?.message}</p>}
+            {errors.salary?.message && <p className={styles.error}>{errors.salary?.message}</p>}
           </div>
           <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Loading..." : "Submit"}
           </button>
-          {errors.root?.message && <p>{errors.root?.message}</p>}
+          {errors.root?.message && <p className={styles.error}>{errors.root?.message}</p>}
         </form>
       </div>
     </main>

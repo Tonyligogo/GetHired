@@ -55,7 +55,7 @@
     gap: 10px;
 }
 .active{
-    color: blue;
+    color: #1877f2;
 }
 .userImage{
     border-radius: 50%;
@@ -64,11 +64,15 @@
 .modal{
     position: absolute;
     top: 30px;
-    border: none;
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    border: 1px solid lightgrey;
     border-radius: 8px;
-    padding: 10px 20px;
-    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
-z-index: 100;
+    padding: 10px 10px;
+    z-index: 100;
+    background-color: white;
+}
+.modal > *:hover{
+    color: #1877f2;
 }

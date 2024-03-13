@@ -44,9 +44,6 @@ export default function page() {
   }, []);
 
   useEffect(() => {
-    // arrivalMessage &&
-    //   currentChat?.id?.includes(arrivalMessage.id) &&
-    //   setMessages((prev) => [...prev, arrivalMessage]);
       if (arrivalMessage && currentChat?.id?.includes(arrivalMessage.id)) {
         setMessages((prev) => [...prev, arrivalMessage]);
         if (currentChat?.id.includes(arrivalMessage.id)) {
@@ -94,7 +91,6 @@ export default function page() {
               console.log(err.response.status, "Error in messenger");
               if (err?.response?.status === 404) {
                 setNoConversation("No conversations");
-                console.log("I worked");
               }
             });
         } catch (error) {
@@ -162,7 +158,7 @@ export default function page() {
       <div className={styles.messenger}>
         <div className={styles.chatMenu}>
           <div className={styles.chatMenuWrapper}>
-            <h3>Conversations</h3>
+            <h3>All conversations</h3>
             {/* <Notifications notifications={notificationCount} /> */}
             {noConversation !== "" && <p>{noConversation}</p>}
             {conversations?.map((conversation) => (
@@ -195,10 +191,13 @@ export default function page() {
                 <div className={styles.chatsWrapper}>
                   <div className={styles.chatBoxHeader}>
                     {currentChat?.employerId === userId && (
-                      <span>
-                        Conversation with {currentChat?.jobSeekerId?.firstName}{" "}
-                        {currentChat?.jobSeekerId?.lastName}
-                      </span>
+                      <p>
+                        <span>
+                          Conversation with {currentChat?.jobSeekerId?.firstName}{" "}
+                          {currentChat?.jobSeekerId?.lastName}{" - "}
+                        </span>
+                        <span>{currentChat?.jobTitle ? `for ${currentChat?.jobTitle} position` : 'Interested in you'}</span>
+                      </p>
                     )}
                     {currentChat?.jobSeekerId === userId && (
                       <span>

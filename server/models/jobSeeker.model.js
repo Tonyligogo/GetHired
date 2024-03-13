@@ -30,6 +30,11 @@ const jobSeekerSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "CV",
     },
+    niche:{
+      type: String,
+      ref:'User',
+      required:true
+    },
     totalStars: {
       type: Number,
       default: 0,
@@ -40,7 +45,7 @@ const jobSeekerSchema = new Schema(
     },
     coins: { 
       type: Number, 
-      default: 50 
+      default: 30 
     }
   },
   { timestamps: true }

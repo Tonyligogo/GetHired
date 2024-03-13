@@ -94,6 +94,10 @@
 .registerLink{
     font-size: 14px;
     text-decoration: underline;
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+    color: #432cd6;
 }
 .errorMsg{
     color: red;

@@ -7,6 +7,10 @@ export const conversationSchema = new Schema({
         unique:true,
         required:true
     },
+    jobTitle: {
+        type: String,
+        required:false
+    },
     employerId: {
         type: Schema.Types.ObjectId,
         ref: 'User',

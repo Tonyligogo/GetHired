@@ -1,0 +1,138 @@
+.pricingContainer{
+    padding: 2rem 6rem;
+    position: relative;
+}
+.packages{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.pricingHeading{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.package{
+    padding: 40px 30px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.lastPackage{
+    padding: 20px 30px; 
+    height: 240px;
+}
+.package:hover{
+    padding: 40px 30px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 15px rgba(24, 119, 242, 0.75);
+    position: relative;
+}
+.lastPackage:hover{
+    padding: 20px 30px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 15px rgba(24, 119, 242, 0.75);
+    position: relative;
+}
+.package h4{
+    font-weight: 500;
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #37517e;
+}
+.package span.price{
+    color: #37517e;
+    font-size: 48px;
+    display: block;
+}
+.package span.price sup{
+    font-size: 30px;
+}
+.package span.timeSpan{
+    display: block;
+    font-size: 20px;
+    color: #1877f2;
+    margin-bottom: 25px;
+}
+.package ul{
+    padding: 0;
+    margin-bottom: 50px;
+}
+.package ul li{
+    display: flex;
+    align-items: flex-start;
+    width: fit-content;
+    gap: 5px;
+    margin-bottom: 10px;
+    color: #999;
+    font-size: 18px;
+}
+.package ul li.lineThrough{
+    color: #ccc;
+    text-decoration: line-through;
+}
+.btnOutline{
+    color: #1877f2;
+    border: none;
+    border-radius: 50px;
+    border-width: 1px;
+    padding: 8px 35px;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 20px;
+    cursor: pointer;
+}
+.btnOutline:hover{
+    background: #1877f2;
+    color: #fff;
+}
+.package.activePackage{
+    border-top: 4px solid #1877f2;
+}
+.package.activePackage button{
+    background: #1877f2;
+    color: #fff;
+}
+/* mpesa modal */
+.mpesaModal{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    /* box-shadow: 0px 2px 15px rgba(24, 119, 242, 0.75); */
+    color: white;
+    background-color: #151619;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.phoneNumber::-webkit-outer-spin-button,
+.phoneNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+
+.phoneNumber[type=number] {
+  appearance: textfield;
+}
+.label{
+    display: block;
+    margin-bottom: 10px;
+}
+.payBtn{
+    margin-top: 10px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 20px;
+    transition: all 200ms ease;
+}
+.payBtn:hover{
+    padding: 6px 14px;
+    cursor: pointer;
+}

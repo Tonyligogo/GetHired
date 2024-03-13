@@ -24,7 +24,7 @@ const postSchema = new Schema({
         required: true,
     },
     requirements:{
-        type: String,
+        type: [String],
         required: true,
     },
     salary:{
@@ -39,9 +39,13 @@ const postSchema = new Schema({
         type: String,
         required: true,
     },
+    niche:{
+        type: String,
+        required: true,
+    },
     approved: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     status:{
         type: String,  // "open", "closed",

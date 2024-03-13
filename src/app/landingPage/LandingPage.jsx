@@ -38,6 +38,28 @@ export default function LandingPage() {
           />{" "}
         </div>
       </div>
+      <section className={styles.howItWorksSection}>
+      <h2 className={styles.howItWorksTitleMain} style={{textAlign:'center'}}>How GetHired works
+      
+      <span className={styles.underline}> <small className={styles.underline1} ></small> </span>
+      </h2>
+      <div className={styles.howItWorksWrapper}>
+                <div className={styles.howItWorks}>
+                  <h3 className={styles.howItWorksTitle}>GetHired uses coins to enable users to post and apply for jobs.</h3>
+                  <ul className={styles.list}>
+                  <li><Icon icon="mdi:tick-circle" width="1rem" height="1rem" /> Coins are virtual tokens that enable you to post or apply for jobs.</li>
+                      <li><Icon icon="mdi:tick-circle" width="1rem" height="1rem" /> You are freely given 30 coins upon registering to get you started.</li>
+                      <li><Icon icon="mdi:tick-circle" width="1rem" height="1rem" /> Each job you post or apply for costs you some coins.</li>
+                      <li><Icon icon="mdi:tick-circle" width="1rem" height="1rem" /> You <strong>cannot</strong> post or apply for a job without coins.</li>
+                  </ul>
+                  <span className={styles.howItWorksTitle1}><Icon icon="noto-v1:light-bulb" width="1.1rem" height="1.1rem" /> You can buy coins whenever you need in your profile page.</span>
+                </div>
+               
+                <div className={styles.whatAreCoins}>
+              <Link href="/register">Sign up now and get free coins!</Link>
+                </div>
+      </div>
+      </section>
       <div className={styles.fiverrBusiness}>
         <div className={styles.fiverrBsContainer}>
           <div className={styles.leftSide}>

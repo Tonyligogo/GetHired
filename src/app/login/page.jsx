@@ -3,22 +3,21 @@
 import { signIn } from "next-auth/react";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
-import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import { Icon } from "@iconify/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 // import toast from "react-hot-toast";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { server } from "@/server";
-// import { useUserContext } from '@/app/context/Userprovider';
 
 function Login() {
-  const { data: session } = useSession();
+  const {status, data: session } = useSession();
+  const router = useRouter();
   useEffect(() => {
-    if (session) {
-      redirect("/");
+    if(status !== 'loading'){
+      if (session) {
+        router.back();
+      }
     }
   }, [session]);
 
@@ -34,10 +33,9 @@ function Login() {
   const [passwordType, setPasswordType] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const router = useRouter();
 
   useEffect(() => {
-    userRef.current.focus();
+    userRef?.current?.focus();
   }, []);
 
   function handleChange(e) {
@@ -82,56 +80,9 @@ function Login() {
 
   return (
     <div className={styles.loginPage}>
-      <div className={styles.form}>
-        <h2 className={styles.title}>Sign in to GetHired</h2>
-        <span
-          className={styles.google}
-          onClick={() => signIn("google", { callbackUrl: "/" })}
-        >
-          <Image
-            width={24}
-            height={24}
-            src="https://freelogopng.com/images/all_img/1657955079google-icon-png.png"
-            alt="google logo"
-          />
-          Sign in with Google
-        </span>
-        <p className={styles.line}>
-          <small className={styles.inlineText}>or sign in with email</small>
-        </p>
+      {(status !=='loading' && !session?.user) && <div className={styles.form}>
+         <h2 className={styles.title}>Sign in to GetHired</h2>
         <form onSubmit={handleLogin}>
-          <div className={styles.inputBox}>
-            <label htmlFor="firstName" className={styles.label}>
-              FirstName
-            </label>
-            <input
-              className={styles.input}
-              id="firstName"
-              type="firstName"
-              value={formValues.firstName}
-              ref={userRef}
-              name="firstName"
-              autoComplete="off"
-              onFocus={() => setUserFocus(true)}
-              required
-              onChange={handleChange}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <label htmlFor="lastName" className={styles.label}>
-              LastName
-            </label>
-            <input
-              className={styles.input}
-              id="lastName"
-              type="lastName"
-              value={formValues.lastName}
-              name="lastName"
-              autoComplete="off"
-              required
-              onChange={handleChange}
-            />
-          </div>
           <div className={styles.inputBox}>
             <label htmlFor="email" className={styles.label}>
               Email
@@ -144,6 +95,8 @@ function Login() {
               name="email"
               autoComplete="off"
               required
+              ref={userRef}
+              onFocus={() => setUserFocus(true)}
               onChange={handleChange}
             />
           </div>
@@ -180,19 +133,12 @@ function Login() {
             />
           </div>
           {error !== "" && <p className={styles.errorMsg}>{error}</p>}
-          {loading ? (
-            <button className={styles.signIn}>
-              {/* <CircularProgress size="14px" className={styles.progress}/> */}
-              Signing in...
-            </button>
-          ) : (
-            <button className={styles.signIn}>Sign in</button>
-          )}
+            <button className={styles.signIn}>{loading ?'Signing in...': 'Sign in'}</button>
           <Link href="/register" className={styles.registerLink}>
             Create an account
           </Link>
         </form>
-      </div>
+      </div>}
     </div>
   );
 }
